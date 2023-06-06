@@ -1,33 +1,27 @@
 import pygrib
 import plotly.graph_objects as go
+import plotly.express as px
 import numpy as np
 
-file = pygrib.open("MRMS_PrecipRate.latest.grib2")
-# file = pygrib.open("MRMS_PrecipRate_00.00_20230605-165800.grib2")
+grbs = pygrib.open("data/MRMS_PrecipRate.latest.grib2")
+# grbs = pygrib.open("data/MRMS_PrecipRate_00.00_20230605-165800.grib2")
 
-file.seek(0)
+print(grbs[1].keys())
 
-for grb in file:
-    print(grb)
-    print(grb.keys())
+data, lats, lons = grbs[1].data(lat1=37, lat2=40, lon1=-80+360, lon2=-75+360)
+print(f"{data.shape}, {lats.shape}, {lons.shape}")
 
-    data, lats, lons = grb.data(lat1=20, lat2=70, lon1=220, lon2=320)
+lats = lats.flatten()
+lons = lons.flatten()
 
-    lats_graph = []
-    lons_graph = []
+lat = []
+lon = []
 
-    for i in range(len(lats)):
-        if (i % 20 == 0):
-            lats_graph.append(lats[i])
-            lons_graph.append(lons[i])
+# grabbing every few value of lats and lons for easier graphing 
+for i in range(len(lats)):
+    if i % 610 == 0:
+        lat.append(lats[i])
+        lon.append(lons[i])
 
-print(len(lats_graph))
-    
-
-# fig = go.Figure(data=[go.Scatter3d(
-#     x = lons,
-#     y = lats,
-#     z = [1 for i in range(len(lons))],
-#     mode = "markers"
-# )])
-# fig.show()
+fig = px.scatter_geo(lat=lat, lon=lon)
+fig.show()
