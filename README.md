@@ -10,3 +10,4 @@ Anaconda Environment Requirements:
 - requests
 - gzip
 - shutil
+- APScheduler
