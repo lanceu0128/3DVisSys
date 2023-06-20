@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Vis Sys</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>3DVisSys</h1>
+    </header>
+
+    <h3>{{ title }}</h3>
+
+    <div id='chart' class='chart'></div>
+
+    <p>{{ description }}</p>
+</body>
+
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+    var graphs = {{graphJSON  | safe}};
+    Plotly.plot('chart', graphs, {});
+</script>
+
+</html>
