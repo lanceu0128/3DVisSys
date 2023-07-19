@@ -1,24 +1,27 @@
-@font-face {
-    font-family: barlow;
-    src: url(../../fonts/Barlow/Barlow-Bold.ttf)
+.navbar {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
-body {
-    text-align: center;
+.tempus-dominus-widget {
+    margin: auto;
+    width: 100%;
+    box-shadow:none;
 }
 
-header {
-    background-color: #E7E9EB;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
-    margin: 0 auto;
+.rounded-bottom-left {
+    border-bottom-left-radius: 5px;
 }
 
-h1, h3, p {
-    font-family: barlow;
+.rounded-bottom-right {
+    border-bottom-right-radius: 5px;
 }
 
-.chart {
-    margin: 0 auto;
-    display:flex;
-    justify-content: center;
-    align-items: center}
+.dropdown-item:hover {
+    color: black !important;
+}
+
+.table-condensed {
+    margin: auto !important;
+}

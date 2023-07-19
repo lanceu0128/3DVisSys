@@ -10,7 +10,7 @@ import pygrib, time, json
 start_time = time.time()
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
-file_location = 'data/3Drefl/'
+file_location = 'testdata/SampleData/'
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
@@ -61,15 +61,31 @@ def make_figure(download_time, h, w):
     map_x, map_y, map_z = util.process_map_geojson()
 
     fig = go.Figure(frames = [go.Frame(data = go.Volume(
-        x = df.loc[df['heights'] == height, 'lat'],
-        y = df.loc[df['heights'] == height, 'lon'],
-        z = df.loc[df['heights'] == height, 'heights'],
-        value = df.loc[df['heights'] == height, 'data'],
-        isomin = df['data'].min()+0.1,
-        isomax = df['data'].max(),
-        opacity = 1,
-        surface_count = 17,
-        ),
+                x = df.loc[df['heights'] == height, 'lat'],
+                y = df.loc[df['heights'] == height, 'lon'],
+                z = df.loc[df['heights'] == height, 'heights'],
+                value = df.loc[df['heights'] == height, 'data'],
+                isomin = 0,
+                isomax = df['data'].max(),
+                opacity = 1,
+                surface_count = 17,
+                customdata = df['locations'],
+                hovertemplate = """Relectivity: %{value:.3f} dBZ <br>Latitude: %{x:.3f} <br>Longitude: %{y:.3f} <br>Height: {z:.3f} <br>Location: %{customdata}<extra></extra>""",
+                colorscale= [
+                    [0, 'rgb(0, 0, 255)'],          #blue
+                    [1/10_000, 'rgb(0, 128, 128)'], #cyan
+                    [1/1_000, 'rgb(0, 255, 0)'],    #green
+                    [1/100, 'rgb(255, 255, 0)'],    #yellow
+                    [1/10, 'rgb(255, 128, 0)'],     #orange
+                    [1, 'rgb(255, 0, 0)'],          #red
+                ],
+                colorbar=dict(
+                    thickness=20,
+                    ticklen=0, 
+                    tickcolor='black',
+                    tickfont=dict(size=14, color='black')
+                )
+            ),
         name = str(height)
         )
     for height in df['heights'].unique().tolist()])
@@ -79,26 +95,12 @@ def make_figure(download_time, h, w):
         y = df['lon'],
         z = df['heights'],
         value = df["data"],
-        isomin = 0,
+        isomin = 0.1,
         isomax = 50,
         opacity = 0.2, # best so far: 0.2
         surface_count = 5, #best so far: 5
-        colorscale = "Jet",
-        # caps = dict(x_show=False, y_show=False, z_show=False),
+        colorscale= "jet"
     ))
-
-    # fig.add_trace(
-    #     go.Volume(
-    #             x = df.loc[df['heights'] == 0.5, 'lat'],
-    #             y = df.loc[df['heights'] == 0.5, 'lon'],
-    #             z = df.loc[df['heights'] == 0.5, 'heights'],
-    #             value = df.loc[df['heights'] == 0.5, 'data'],
-    #             isomin = df['data'].min()+0.1,
-    #             isomax = df['data'].max(),
-    #             opacityscale = "uniform",
-    #             surface_count = 17, # needs to be a large number for good volume rendering
-    #         )
-    # )
 
     def frame_args(duration):
         return {
@@ -117,7 +119,7 @@ def make_figure(download_time, h, w):
                     "steps": [
                         {
                             "args": [[f.name], frame_args(0)],
-                            "label": str(k),
+                            "label": f.name,
                             "method": "animate",
                         }
                         for k, f in enumerate(fig.frames)
@@ -133,7 +135,20 @@ def make_figure(download_time, h, w):
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
             zaxis_title = "Height [km; MSL]",
-            zaxis=dict(range = [float(df['heights'].min()), float(df['heights'].max())], autorange=False),
+            aspectmode='manual',
+            aspectratio=dict(x=1, y=1, z=1), 
+            xaxis=dict(
+                range=[37, 40],  # Set the range for the y-axis
+                autorange=False  # Disable autorange for the y-axis
+            ),
+            yaxis=dict(
+                range=[-80, -75],  # Set the range for the y-axis
+                autorange=False  # Disable autorange for the y-axis
+            ),
+            zaxis=dict(
+                range=[0, 19],  # Set the range for the y-axis
+                autorange=False  # Disable autorange for the y-axis
+            )
         ),
         updatemenus = [
             {
@@ -163,4 +178,4 @@ def make_figure(download_time, h, w):
     return fig
 
 if __name__ == '__main__':
-    make_figure("_2023-07-03_14-42-57", 600, 1000)
+    make_figure("_20210708-120040", 600, 1000)

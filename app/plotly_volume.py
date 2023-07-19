@@ -12,7 +12,7 @@ pd.set_option('float_format', '{:f}'.format)
 start_time = time.time()
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
-file_location = 'data/3Drefl/'
+file_location = 'testdata/SampleData/'
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
@@ -50,7 +50,7 @@ def grab_data():
 
     df = pd.concat(height_frames, ignore_index=True, sort=False)
     print(df.describe())
-    print(df.head(10))
+    print(df.tail(100))
     print("Figure Data Grabbed")
 
     return df
@@ -71,9 +71,9 @@ def make_figure(download_time, h, w):
         isomax = df['data'].max(),
         opacity = 0.2, # best so far: 0.2
         surface_count = 9, #best so far: 5
-        colorscale = "Jet",
         customdata = df['locations'],
-        hovertemplate = """Reflectivity: %{z} dBZ <br>Latitude: %{x:.2f} <br>Longitude: %{y:.2f} <br>Location: %{customdata}<extra></extra>"""
+        hovertemplate = """Reflectivity: %{z:.3f} dBZ <br>Latitude: %{x:.3f} <br>Longitude: %{y:.3f} <br>Location: %{customdata}<extra></extra>""",
+        colorscale= "jet"
     )
 
     map_plot = go.Scatter3d(
@@ -81,24 +81,40 @@ def make_figure(download_time, h, w):
         y = map_y,
         z = map_z,
         mode='lines',
-        line_color='#999999',
+        line_color='#0a0a0a',
         hovertemplate = "Latitude: %{x:.2f} <br>Longitude: %{y:.2f}<extra></extra>",
         line_width=1.5
     )
 
     fig = go.Figure(data = [volume_plot, map_plot])
 
-    fig.update_layout(scene = dict(
-        xaxis_title = "Latitude",
-        yaxis_title = "Longitude", 
-        zaxis_title = "Height [km; MSL]",
-        ),
-        coloraxis_colorbar = dict(
-            title="dBZ"
+    fig.update_layout(
+        height = h,
+        width = w,
+        scene=dict(
+            xaxis_title = "Latitude",
+            yaxis_title = "Longitude", 
+            zaxis_title = "Height [km; MSL]",
+            aspectmode='manual',
+            aspectratio=dict(x=1, y=1, z=1), 
+            xaxis=dict(
+                range=[37, 40],  
+                autorange=False  
+            ),
+            yaxis=dict(
+                range=[-80, -75],
+                autorange=False  
+            ),
+            zaxis=dict(
+                range=[0, 19],  
+                autorange=False  
+            )
         )
     )
 
     fig.show()
 
+    return fig
+
 if __name__ == "__main__":
-    make_figure("_2023-07-03_14-35-35", 650, 1000)
+    make_figure("_20210708-120040", 600, 1000)

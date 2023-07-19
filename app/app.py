@@ -4,7 +4,9 @@ from datetime import datetime
 import pandas as pd
 import gzip, shutil, os, json, requests, time
 import plotly, pygrib
+import plotly_heatmap
 import plotly_volume
+import plotly_volume_animation
 
 app = Flask(__name__)
 
@@ -15,9 +17,12 @@ def delete_dir(dir):
     print(f"Deleted files in directory {dir}")
 
 def get_newest_graph(dir):
-    files = os.listdir(dir)
-    paths = [os.path.join(dir, file) for file in files]
-    return max(paths, key=os.path.getctime)
+    try:
+        files = os.listdir(dir)
+        paths = [os.path.join(dir, file) for file in files]
+        return max(paths, key=os.path.getctime)
+    except ValueError:
+        return None
 
 def download(url, location):
     unzip_location = location.replace(".gz", "").replace(".latest", "")
@@ -36,7 +41,7 @@ def download(url, location):
 # checks if there is substantial rain data using smaller 2d file; if True collect 3D data files and create 3D graph
 def check_2d():
     url = "https://mrms.ncep.noaa.gov/data/2D/PrecipRate/MRMS_PrecipRate.latest.grib2.gz"
-    file_location = "data/2Drefl"
+    file_location = "data/2Dprecip"
     file = "/MRMS_PrecipRate.latest.grib2.gz"
     location = file_location + file
 
@@ -46,7 +51,11 @@ def check_2d():
     data, lats, lons = grb[1].data(lat1=37, lat2=40, lon1=-80+360, lon2=-75+360)
     vals_greater_0 = (data > 0).sum()
 
-    # delete_dir(file_location)
+    fig = plotly_volume.make_figure(download_time=file_time, h = 750, w = 1000)
+
+    file = "graphs/2dprecip/" + file_time + ".json"
+    with open(file, 'w') as f:
+        f.write(plotly.io.to_json(fig))
 
     return vals_greater_0
 
@@ -56,7 +65,7 @@ def download_3d():
     now = datetime.now()
     val_threshold = 0
 
-    if check_2d() <= 0:
+    if check_2d() <= 49: # check if there are at least 50 points to graph
         print("Skipping 3D graph creation ")
         return
 
@@ -74,9 +83,15 @@ def download_3d():
 
         download(url, location)
 
-    fig = plotly_volume.make_figure(download_time=file_time, h = 650, w = 1000)
+    fig = plotly_heatmap.make_figure(download_time=file_time, h = 750, w = 1000)
 
-    file = "graphs/3Drefl/" + file_time + ".json"
+    file = "graphs/3drefl/" + file_time + ".json"
+    with open(file, 'w') as f:
+        f.write(plotly.io.to_json(fig))
+
+    fig = plotly_volume_animation.make_figure(download_time=file_time, h = 750, w = 1000)
+
+    file = "graphs/3danim/" + file_time + ".json"
     with open(file, 'w') as f:
         f.write(plotly.io.to_json(fig))
 
@@ -87,9 +102,6 @@ def download_3d():
 
 @app.route('/')
 def main(): 
-
-    # download_3d()
-
     # file = get_newest_graph("graphs/3Drefl")
     # with open(file) as f:
     #     fig = plotly.io.read_json(f)
@@ -97,9 +109,8 @@ def main():
     # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index.html', 
-        # graphJSON = graphJSON, 
         title="MRMS Reflectivity Factor", 
-        description=f"Source: https://mrms.ncep.noaa.gov/data/3DRefl/"
+        content=f"Source: https://mrms.ncep.noaa.gov/data/3DRefl/"
     )
 
 sched = BackgroundScheduler(daemon = True)
