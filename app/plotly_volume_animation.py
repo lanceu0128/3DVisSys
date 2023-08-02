@@ -10,7 +10,7 @@ import pygrib, time, json
 start_time = time.time()
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
-file_location = 'testdata/SampleData/'
+file_location = 'data/3Drefl/'
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
@@ -65,21 +65,15 @@ def make_figure(download_time, h, w):
                 y = df.loc[df['heights'] == height, 'lon'],
                 z = df.loc[df['heights'] == height, 'heights'],
                 value = df.loc[df['heights'] == height, 'data'],
-                isomin = 0,
+                isomin = 0.1,
                 isomax = df['data'].max(),
                 opacity = 1,
                 surface_count = 17,
                 customdata = df['locations'],
                 hovertemplate = """Relectivity: %{value:.3f} dBZ <br>Latitude: %{x:.3f} <br>Longitude: %{y:.3f} <br>Height: {z:.3f} <br>Location: %{customdata}<extra></extra>""",
-                colorscale= [
-                    [0, 'rgb(0, 0, 255)'],          #blue
-                    [1/10_000, 'rgb(0, 128, 128)'], #cyan
-                    [1/1_000, 'rgb(0, 255, 0)'],    #green
-                    [1/100, 'rgb(255, 255, 0)'],    #yellow
-                    [1/10, 'rgb(255, 128, 0)'],     #orange
-                    [1, 'rgb(255, 0, 0)'],          #red
-                ],
+                colorscale= "jet",
                 colorbar=dict(
+                    title="dbZ",
                     thickness=20,
                     ticklen=0, 
                     tickcolor='black',
@@ -90,47 +84,56 @@ def make_figure(download_time, h, w):
         )
     for height in df['heights'].unique().tolist()])
 
-    fig.add_trace(go.Volume(
-        x = df['lat'],
-        y = df['lon'],
-        z = df['heights'],
-        value = df["data"],
-        isomin = 0.1,
-        isomax = 50,
-        opacity = 0.2, # best so far: 0.2
-        surface_count = 5, #best so far: 5
-        colorscale= "jet"
-    ))
+    fig.add_trace(
+        go.Volume(
+                x = df.loc[df['heights'] == 0.5, 'lat'],
+                y = df.loc[df['heights'] == 0.5, 'lon'],
+                z = df.loc[df['heights'] == 0.5, 'heights'],
+                value = df.loc[df['heights'] == 0.5, 'data'],
+                isomin = df['data'].min()+0.1,
+                isomax = df['data'].max(),
+                opacityscale = "uniform",
+                surface_count = 17, # needs to be a large number for good volume rendering,
+                colorscale= "jet",
+                colorbar=dict(
+                    title="dbZ",
+                    thickness=20,
+                    ticklen=0, 
+                    tickcolor='black',
+                    tickfont=dict(size=14, color='black')
+                )
+            )
+    )
+
 
     def frame_args(duration):
         return {
-                "frame": {"duration": duration},
-                "mode": "immediate",
-                "fromcurrent": True,
-                "transition": {"duration": duration, "easing": "linear"},
-            }
+            "frame": {"duration": duration},
+            "mode": "immediate",
+            "fromcurrent": True,
+            "transition": {"duration": duration, "easing": "linear"},
+        }
 
     sliders = [
+        {
+            "pad": {"b": 10, "t": 60},
+            "len": 0.9,
+            "x": 0.1,
+            "y": 0,
+            "steps": [
                 {
-                    "pad": {"b": 10, "t": 60},
-                    "len": 0.9,
-                    "x": 0.1,
-                    "y": 0,
-                    "steps": [
-                        {
-                            "args": [[f.name], frame_args(0)],
-                            "label": f.name,
-                            "method": "animate",
-                        }
-                        for k, f in enumerate(fig.frames)
-                    ],
+                    "args": [[f.name], frame_args(0)],
+                    "label": f.name,
+                    "method": "animate",
                 }
-            ]
+                for k, f in enumerate(fig.frames)
+            ],
+        }
+    ]
 
     # Layout
     fig.update_layout(
-        height = h,
-        width = w,
+        title = f"Reflectivity (Animated) {download_time[1:]}",
         scene=dict(
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
@@ -174,7 +177,6 @@ def make_figure(download_time, h, w):
         sliders=sliders
     )
 
-    fig.show()
     return fig
 
 if __name__ == '__main__':

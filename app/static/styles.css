@@ -1,3 +1,7 @@
+body {
+    width: 100%;
+}
+
 .navbar {
     margin: 0 !important;
     padding-top: 0 !important;
@@ -23,5 +27,9 @@
 }
 
 .table-condensed {
+    margin: auto !important;
+}
+
+.plotly .svg-container {
     margin: auto !important;
 }

@@ -12,7 +12,7 @@ pd.set_option('float_format', '{:f}'.format)
 start_time = time.time()
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
-file_location = 'testdata/SampleData/'
+file_location = 'data/3Drefl/'
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
@@ -73,7 +73,14 @@ def make_figure(download_time, h, w):
         surface_count = 9, #best so far: 5
         customdata = df['locations'],
         hovertemplate = """Reflectivity: %{z:.3f} dBZ <br>Latitude: %{x:.3f} <br>Longitude: %{y:.3f} <br>Location: %{customdata}<extra></extra>""",
-        colorscale= "jet"
+        colorscale= "jet",
+        colorbar=dict(
+            title="dbZ",
+            thickness=20,
+            ticklen=0, 
+            tickcolor='black',
+            tickfont=dict(size=14, color='black')
+        )
     )
 
     map_plot = go.Scatter3d(
@@ -89,8 +96,7 @@ def make_figure(download_time, h, w):
     fig = go.Figure(data = [volume_plot, map_plot])
 
     fig.update_layout(
-        height = h,
-        width = w,
+        title = f"Reflectivity {download_time[1:]}",
         scene=dict(
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
@@ -111,8 +117,6 @@ def make_figure(download_time, h, w):
             )
         )
     )
-
-    fig.show()
 
     return fig
 

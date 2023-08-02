@@ -16,6 +16,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/solid.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/fontawesome.min.js"></script>
 
+    <!-- Plotly Requirements -->
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
     <!-- Custom Style / Scripts -->
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
     <script src="{{url_for('static', filename='scripts.js')}}"></script>
@@ -23,7 +26,7 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 </head>
-<body>
+<body id="body">
   <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
     <a class="navbar-brand text-white font-weight-bold" href="#">3D Visualization System</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,18 +69,6 @@
   <div class="container-fluid mt-0">
     <div class="row">
       <div class="col-md-3 sidebar bg-info">
-        <ul class="nav flex-row w-100 justify-content-center">
-          <li class="nav-item">
-            <button id="default-btn" class="active nav-link border-top-0 border-right-0 border-left border-bottom border-white bg-danger text-white rounded-bottom-left" onclick="handle_graph_selection(this, '3drefl')" href="#">3D Refl</a>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link border-top-0 border-left-0 border-right-0 border-bottom border-white bg-primary text-white" onclick="handle_graph_selection(this, '3dreflanim')" href="#">3D Refl Animation</a>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link border-top-0 border-left-0 border-right border-bottom border-white bg-primary text-white rounded-bottom-right" onclick="handle_graph_selection(this, '2dprecip')" href="#">2D Precip</a>
-          </li>
-        </ul>
-
         <div id="dateTimePicker" class="mt-3">
         </div>
 
@@ -85,7 +76,7 @@
           Get Graph from Selected Date
         </button>
 
-        <button type="button" class="btn btn-light mt-3 mx-auto w-100">
+        <button type="button" class="btn btn-light mt-3 mx-auto w-100" onclick="get_latest_graph()">
           Get Latest Graph
         </button>
 
@@ -93,8 +84,13 @@
       </div>
 
       <div class="col-md-9 text-center mt-5 px-5 bg-white">
-        <h1> {{ title }}</h1>
-        <p>{{ content }}</p>
+        <h1 id="main-title">{{ title }}</h1>
+        <p id="main-content">{{ content }}</p>
+        <div class="row">
+          <div id="2dprecip" class="w-50"></div>
+          <div id="3drefl" class="w-50"></div>
+        </div>
+        <div id="3danim" class="w-100"></div>
       </div>
     </div>
   </div>
@@ -106,7 +102,7 @@
           <p class="my-0 ">Lance Uymatiao & Malarvizhi Arulraj</p>
         </div>
         <div class="col-md-4 text-center">
-          <img src="cisess_logo.png" width=125 height=100 alt="Center Image">
+          <img src="{{url_for('static', filename='cisess_logo.png')}}" width=125 height=100 alt="Center Image">
         </div>
         <div class="col-md-4 text-right">
           <p class="my-0">Documentation</p>
@@ -116,12 +112,26 @@
   </footer>
 
   <script type="text/javascript">
+    valid_dates = convert_to_dates( {{ valid_dates | safe }} )
+
     dateTimePicker = new tempusDominus.TempusDominus(document.getElementById('dateTimePicker'), {
       display: {
         inline: true,
         theme: 'light',
+      },
+      restrictions: {
+        enabledDates: valid_dates
       }
     });
+    $("#dateTimePicker").addClass("bg-light")
+
+    // var refl = {{reflJSON  | safe}};
+    var precip = {{precipJSON  | safe}};
+    var anim = {{animJSON  | safe}};
+
+    // Plotly.plot('3drefl', refl)
+    Plotly.plot('2dprecip', precip)
+    Plotly.plot('3danim', anim)
   </script>
 </body>
 </html>

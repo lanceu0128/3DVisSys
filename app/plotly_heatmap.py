@@ -4,16 +4,18 @@ import pygrib
 import pandas as pd
 import utilities as util
 
+coords = {
+    "lat1": 37,
+    "lat2": 40,
+    "lon1": -80,
+    "lon2": -75
+}
+
 def grab_data():
+    global coords
+
     grbs = pygrib.open("data/2Dprecip/MRMS_PrecipRate.grib2")
     grb = grbs[1]
-
-    coords = {
-        "lat1": 37,
-        "lat2": 40,
-        "lon1": -80,
-        "lon2": -75
-    }
 
     data, lats, lons = grbs[1].data(lat1=37, lat2=40, lon1= -80 + 360, lon2=-75 + 360)
     lons -= 360
@@ -30,6 +32,8 @@ def grab_data():
     return df
 
 def make_figure(download_time, h, w):
+    global coords
+
     df = grab_data()
 
     fig = go.Figure(data = go.Densitymapbox(
@@ -49,6 +53,7 @@ def make_figure(download_time, h, w):
             [1, 'rgb(255, 0, 0)'],          #red
         ],
         colorbar=dict(
+            title="mm",
             thickness=20,
             ticklen=0, 
             tickcolor='black',
@@ -58,8 +63,7 @@ def make_figure(download_time, h, w):
     )
 
     fig.update_layout(
-        height = h,
-        width = w,
+        title = f"Precipitation {download_time[1:]}",
         mapbox_style="white-bg",
         mapbox_layers=[
             {
@@ -75,10 +79,10 @@ def make_figure(download_time, h, w):
 
     # creates boundary of scrolling; slightly bigger than target region
     fig.update_mapboxes(bounds= dict(
-        west = coords["lon1"] - 3,
-        east = coords["lon2"] + 3,
-        south = coords["lat1"] - 1,
-        north = coords["lat2"] + 1,
+            west = coords["lon1"] - 3,
+            east = coords["lon2"] + 3,
+            south = coords["lat1"] - 1,
+            north = coords["lat2"] + 1,
         )
     )
 
@@ -93,6 +97,7 @@ def make_figure(download_time, h, w):
         )
     )
 
-    fig.show()
+    return fig
 
-    print("Done making 2d graph")
+if __name__ == "__main__":
+    make_figure("test", 650, 1000)
