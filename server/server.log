@@ -1,0 +1,292 @@
+Starting scheduled download
+Downloading from url https://mrms.ncep.noaa.gov/data/2D/PrecipRate/MRMS_PrecipRate.latest.grib2.gz into /home/lanceu/server/data/2Dprecip/MRMS_PrecipRate.latest.grib2.gz
+       lats       lons     data       locations
+0 39.975000 -79.975000 0.000000  Fayette County
+1 39.975000 -79.925000 0.000000  Fayette County
+2 39.975000 -79.875000 0.000000  Fayette County
+3 39.975000 -79.825000 0.000000  Fayette County
+4 39.975000 -79.775000 0.000000  Fayette County
+5 39.975000 -79.725000 0.000000  Fayette County
+6 39.975000 -79.675000 0.000000  Fayette County
+7 39.975000 -79.625000 0.000000  Fayette County
+8 39.975000 -79.575000 0.000000  Fayette County
+9 39.975000 -79.525000 0.000000  Fayette County
+Finished 2D graph creation at _2023-08-10_23-04. 5427 values greater than 0 found
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_00.50/MRMS_MergedReflectivityQC_00.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_00.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_00.75/MRMS_MergedReflectivityQC_00.75.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_00.75_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_01.00/MRMS_MergedReflectivityQC_01.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_01.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_01.25/MRMS_MergedReflectivityQC_01.25.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_01.25_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_01.50/MRMS_MergedReflectivityQC_01.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_01.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_01.75/MRMS_MergedReflectivityQC_01.75.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_01.75_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_02.00/MRMS_MergedReflectivityQC_02.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_02.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_02.25/MRMS_MergedReflectivityQC_02.25.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_02.25_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_02.50/MRMS_MergedReflectivityQC_02.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_02.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_02.75/MRMS_MergedReflectivityQC_02.75.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_02.75_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_03.00/MRMS_MergedReflectivityQC_03.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_03.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_03.50/MRMS_MergedReflectivityQC_03.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_03.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_04.00/MRMS_MergedReflectivityQC_04.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_04.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_04.50/MRMS_MergedReflectivityQC_04.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_04.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_05.00/MRMS_MergedReflectivityQC_05.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_05.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_05.50/MRMS_MergedReflectivityQC_05.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_05.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_06.00/MRMS_MergedReflectivityQC_06.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_06.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_06.50/MRMS_MergedReflectivityQC_06.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_06.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_07.00/MRMS_MergedReflectivityQC_07.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_07.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_07.50/MRMS_MergedReflectivityQC_07.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_07.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_08.00/MRMS_MergedReflectivityQC_08.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_08.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_08.50/MRMS_MergedReflectivityQC_08.50.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_08.50_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_09.00/MRMS_MergedReflectivityQC_09.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_09.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_10.00/MRMS_MergedReflectivityQC_10.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_10.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_11.00/MRMS_MergedReflectivityQC_11.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_11.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_12.00/MRMS_MergedReflectivityQC_12.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_12.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_13.00/MRMS_MergedReflectivityQC_13.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_13.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_14.00/MRMS_MergedReflectivityQC_14.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_14.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_15.00/MRMS_MergedReflectivityQC_15.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_15.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_16.00/MRMS_MergedReflectivityQC_16.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_16.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_17.00/MRMS_MergedReflectivityQC_17.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_17.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_18.00/MRMS_MergedReflectivityQC_18.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_18.00_2023-08-10_23-03.latest.grib2.gz
+Downloading from url https://mrms.ncep.noaa.gov/data/3DRefl/MergedReflectivityQC_19.00/MRMS_MergedReflectivityQC_19.00.latest.grib2.gz into /home/lanceu/server/data/3Drefl/MRMS_MergedReflectivityQC_19.00_2023-08-10_23-03.latest.grib2.gz
+Processing 12.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 12.00 data in 33.24999475479126
+Processing 08.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 08.00 data in 33.52485918998718
+Processing 02.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.00 data in 33.36453700065613
+Processing 05.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 05.00 data in 33.613537549972534
+Processing 09.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 09.00 data in 33.55018615722656
+Processing 02.25 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.25 data in 33.59865951538086
+Processing 08.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 08.50 data in 33.73888278007507
+Processing 10.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 10.00 data in 33.74860978126526
+Processing 01.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.50 data in 33.751404762268066
+Processing 02.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.50 data in 33.760292053222656
+Processing 07.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 07.00 data in 33.773766040802
+Processing 01.25 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.25 data in 33.80190968513489
+Processing 03.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 03.50 data in 33.813769817352295
+Processing 03.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 03.00 data in 33.81448817253113
+Processing 04.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 04.50 data in 33.83534121513367
+Processing 02.75 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.75 data in 33.83175349235535
+Processing 07.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 07.50 data in 33.8481650352478
+Processing 14.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 14.00 data in 33.83632779121399
+Processing 06.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 06.50 data in 33.856945514678955
+Processing 13.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 13.00 data in 33.87784957885742
+Processing 05.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 05.50 data in 33.879589557647705
+Processing 06.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 06.00 data in 33.90729594230652
+Processing 04.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 04.00 data in 33.9192419052124
+Processing 01.75 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.75 data in 33.119436264038086
+Processing 15.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 15.00 data in 40.13995599746704
+Processing 01.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.00 data in 33.16385221481323
+Processing 16.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 16.00 data in 40.15141749382019
+Processing 11.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 11.00 data in 33.200254917144775
+Processing 18.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 18.00 data in 40.168710231781006
+Processing 00.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 00.50 data in 33.170279026031494
+Processing 17.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 17.00 data in 40.24412775039673
+Processing 00.75 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 00.75 data in 33.22523522377014
+Processing 19.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 19.00 data in 40.287166595458984
+                lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      0.572282      7.250000
+std        0.865907      1.443307      3.243947      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      0.000000     11.000000
+max       39.975000    -75.025000     44.780000     19.000000
+             lat        lon     data        locations   heights
+197900 37.025000 -79.975000 0.000000  Franklin County 19.000000
+197901 37.025000 -79.925000 0.000000  Franklin County 19.000000
+197902 37.025000 -79.875000 0.000000  Franklin County 19.000000
+197903 37.025000 -79.825000 0.000000  Franklin County 19.000000
+197904 37.025000 -79.775000 0.000000  Franklin County 19.000000
+...          ...        ...      ...              ...       ...
+197995 37.025000 -75.225000 0.000000                  19.000000
+197996 37.025000 -75.175000 0.000000                  19.000000
+197997 37.025000 -75.125000 0.000000                  19.000000
+197998 37.025000 -75.075000 0.000000                  19.000000
+197999 37.025000 -75.025000 0.000000                  19.000000
+
+[100 rows x 5 columns]
+Figure Data Grabbed
+Processing 02.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.00 data in 57.35945200920105
+Processing 02.25 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.25 data in 57.284279584884644
+Processing 00.75 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 00.75 data in 57.41277265548706
+Processing 08.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 08.00 data in 57.39555621147156
+Processing 08.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 08.50 data in 57.4181272983551
+Processing 06.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 06.00 data in 57.48514127731323
+Processing 02.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.50 data in 57.486185789108276
+Processing 12.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 12.00 data in 57.50112962722778
+Processing 02.75 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 02.75 data in 57.505966663360596
+Processing 07.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 07.00 data in 57.508896589279175
+Processing 14.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 14.00 data in 57.5168981552124
+Processing 10.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 10.00 data in 57.52435517311096
+Processing 13.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 13.00 data in 57.52667784690857
+Processing 06.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 06.50 data in 57.55171275138855
+Processing 01.25 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.25 data in 57.55900025367737
+Processing 03.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 03.00 data in 57.56029176712036
+Processing 04.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 04.50 data in 57.566925048828125
+Processing 03.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 03.50 data in 57.569973945617676
+Processing 05.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 05.50 data in 57.58782649040222
+Processing 01.75 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.75 data in 57.59219145774841
+Processing 04.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 04.00 data in 57.603315591812134
+Processing 05.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 05.00 data in 57.61637592315674
+Processing 11.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 11.00 data in 57.62960886955261
+Processing 01.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.00 data in 57.02513027191162
+Processing 15.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 15.00 data in 64.08637833595276
+Processing 00.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 00.50 data in 57.15138101577759
+Processing 16.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 16.00 data in 64.0468397140503
+Processing 01.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 01.50 data in 57.20619297027588
+Processing 17.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 17.00 data in 64.1043610572815
+Processing 09.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 09.00 data in 57.279497146606445
+Processing 19.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 19.00 data in 64.17232155799866
+Processing 07.50 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 07.50 data in 57.22606086730957
+Processing 18.00 level data
+(60, 100), (60, 100), (60, 100), (60, 100), (60, 100)
+Finished processing 18.00 data in 64.18954086303711
+                lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      0.572282      7.250000
+std        0.865907      1.443307      3.243947      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      0.000000     11.000000
+max       39.975000    -75.025000     44.780000     19.000000
+        lat        lon     data       locations  heights
+0 39.975000 -79.975000 0.000000  Fayette County 0.500000
+1 39.975000 -79.925000 0.000000  Fayette County 0.500000
+2 39.975000 -79.875000 0.000000  Fayette County 0.500000
+3 39.975000 -79.825000 0.000000  Fayette County 0.500000
+4 39.975000 -79.775000 0.000000  Fayette County 0.500000
+5 39.975000 -79.725000 0.000000  Fayette County 0.500000
+6 39.975000 -79.675000 0.000000  Fayette County 0.500000
+7 39.975000 -79.625000 0.000000  Fayette County 0.500000
+8 39.975000 -79.575000 0.000000  Fayette County 0.500000
+9 39.975000 -79.525000 0.000000  Fayette County 0.500000
+Figure Data Grabbed
+Deleted files in directory /home/lanceu/server/data/3Drefl
+Finished 3D graph creation at 19:06:13.957856.
