@@ -11,10 +11,13 @@ import plotly, pygrib
 import pandas as pd
 from bs4 import BeautifulSoup
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 app = Flask(__name__)
 config = json.load(open("/home/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 =======
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 
 # other project file imports
 import plotly_heatmap
@@ -23,6 +26,9 @@ import plotly_volume_animation
 
 app = Flask(__name__)
 config = json.load(open("config.json", "r")) # config.json import
+<<<<<<< HEAD
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 
 # returns every date that the file system contains
@@ -30,6 +36,7 @@ def get_valid_dates():
     # return file system folders
     folder_2D = config["2D"]["graphs"]
     folder_3D = config["3D"]["graphs"]
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     # create list of every date in the 2D folder
@@ -46,6 +53,8 @@ def get_valid_dates():
     return dates 
 
 =======
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 
     # create list of every date in the 2D folder
     files_2D = os.listdir(folder_2D)
@@ -92,6 +101,9 @@ def delete_dir(dir):
     except ValueError:
         return "error in delete_dir"
 
+<<<<<<< HEAD
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 # returns graph from input directory and date (used for "Get Graph from Selected Date" button functionality)
 def get_dated_graph(dir, target_date):
@@ -148,6 +160,7 @@ def download(url, location):
     print(f"Downloading from url {url} into {location}")
 
     unzip_location = location.replace(".gz", "").replace(".latest", "")
+<<<<<<< HEAD
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 
     with open(file) as f:
@@ -159,6 +172,16 @@ def download(url, location):
 <<<<<<< HEAD
     return graphJSON
 =======
+=======
+
+    r = requests.get(url, allow_redirects=True)
+    open(location, 'wb').write(r.content)
+
+    with gzip.open(location, 'rb') as infile:
+        with open(unzip_location, 'wb') as outfile:
+            shutil.copyfileobj(infile, outfile)
+
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
     return unzip_location
 
 def create_figure(graph_type, file_time, h, w):
@@ -228,6 +251,9 @@ def download_3d():
         print(f"Finished 3D graph creation at {current_time}.")
     except ValueError:
         return "error in download_3d"    
+<<<<<<< HEAD
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 
 @app.route('/')
@@ -235,12 +261,18 @@ def main():
     try:
         return render_template('index.html', 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
             title="Overview", 
             content="description",
             reflJSON=None,
             animJSON=None,
             precipJSON=None,
+<<<<<<< HEAD
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
             valid_dates=get_valid_dates()
         )
@@ -252,6 +284,7 @@ def return_dated_graph(date):
     if request.method == 'POST':
         print("received graph_by_date post request")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         refl = get_dated_graph('/home/lanceu/server/graphs/3Drefl', date)
         anim = get_dated_graph('/home/lanceu/server/graphs/3Danim', date)
@@ -293,6 +326,8 @@ def return_latest_graph():
 
         return jsonify({'rendered_template': rendered_template})
 =======
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
         refl = get_dated_graph('graphs/3Drefl', date)
         anim = get_dated_graph('graphs/3Danim', date)
         precip = get_dated_graph('graphs/2Dprecip', date)        
@@ -337,5 +372,9 @@ def return_latest_graph():
 
 sched = BackgroundScheduler(daemon = True)
 sched.add_job(download_3d, 'interval', minutes = 60)
+<<<<<<< HEAD
+sched.start()
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 sched.start()
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
