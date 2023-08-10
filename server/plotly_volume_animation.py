@@ -11,7 +11,11 @@ start_time = time.time()
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
 <<<<<<< HEAD:server/plotly_volume_animation.py
+<<<<<<< HEAD:server/plotly_volume_animation.py
 file_location = '/home/lanceu/server/data/3Drefl/'
+=======
+file_location = 'data/3Drefl/'
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_volume_animation.py
 =======
 file_location = 'data/3Drefl/'
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_volume_animation.py

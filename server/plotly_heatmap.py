@@ -11,10 +11,14 @@ coords = {
     "lon2": -75
 }
 <<<<<<< HEAD:server/plotly_heatmap.py
+<<<<<<< HEAD:server/plotly_heatmap.py
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
 
 def grab_data():
     global coords
 
+<<<<<<< HEAD:server/plotly_heatmap.py
     grbs = pygrib.open("/home/lanceu/server/data/2Dprecip/MRMS_PrecipRate.grib2")
     grb = grbs[1]
 
@@ -23,6 +27,11 @@ def grab_data():
 def grab_data():
     global coords
 
+    grbs = pygrib.open("data/2Dprecip/MRMS_PrecipRate.grib2")
+    grb = grbs[1]
+
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
+=======
     grbs = pygrib.open("data/2Dprecip/MRMS_PrecipRate.grib2")
     grb = grbs[1]
 
@@ -75,8 +84,12 @@ def make_figure(download_time, h, w):
         ],
         colorbar=dict(
 <<<<<<< HEAD:server/plotly_heatmap.py
+<<<<<<< HEAD:server/plotly_heatmap.py
             
             title="Rain-Rate<br>(mm/h)",
+=======
+            title="mm",
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
 =======
             title="mm",
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
@@ -128,8 +141,12 @@ def make_figure(download_time, h, w):
 
 if __name__ == "__main__":
 <<<<<<< HEAD:server/plotly_heatmap.py
+<<<<<<< HEAD:server/plotly_heatmap.py
     fig = make_figure("test", 650, 1000)
     fig.show()
+=======
+    make_figure("test", 650, 1000)
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
 =======
     make_figure("test", 650, 1000)
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py

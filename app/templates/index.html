@@ -28,6 +28,9 @@
     <!-- Plotly Requirements -->
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 
+    <!-- Plotly Requirements -->
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
     <!-- Custom Style / Scripts -->
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
     <script src="{{url_for('static', filename='scripts.js')}}"></script>
@@ -42,7 +45,10 @@
   <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='cisess_logo_white.png')}}">
 </head>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 =======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 <body id="body">
@@ -151,6 +157,9 @@
           <div id="3drefl" class="w-50"></div>
         </div>
         <div id="3danim" class="w-100"></div>
+<<<<<<< HEAD
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
       </div>
     </div>
@@ -164,9 +173,13 @@
         </div>
         <div class="col-md-4 text-center">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <a href="https://cisess.umd.edu/"><img src="{{url_for('static', filename='cisess_logo.png')}}" width=125
               height=100 alt="Center Image">
           </a>
+=======
+          <img src="{{url_for('static', filename='cisess_logo.png')}}" width=125 height=100 alt="Center Image">
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 =======
           <img src="{{url_for('static', filename='cisess_logo.png')}}" width=125 height=100 alt="Center Image">
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
@@ -182,7 +195,11 @@
 
   <script type="text/javascript">
 <<<<<<< HEAD
+<<<<<<< HEAD
     valid_dates = convert_to_dates({{ valid_dates | safe }})
+=======
+    valid_dates = convert_to_dates( {{ valid_dates | safe }} )
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 =======
     valid_dates = convert_to_dates( {{ valid_dates | safe }} )
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
@@ -198,7 +215,10 @@
     });
     $("#dateTimePicker").addClass("bg-light")
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
 
     // var refl = {{reflJSON  | safe}};
     var precip = {{precipJSON  | safe}};
@@ -207,6 +227,9 @@
     // Plotly.plot('3drefl', refl)
     Plotly.plot('2dprecip', precip)
     Plotly.plot('3danim', anim)
+<<<<<<< HEAD
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
+=======
 >>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea
   </script>
 </body>
