@@ -1,11 +1,17 @@
+# python library imports
 from multiprocessing import Pool
 from datetime import datetime
+import utilities as util
+import time
+
+# plotly imports
 import plotly.graph_objects as go
 import plotly.io as pio
+
+# data libraries
 import numpy as np
 import pandas as pd
-import utilities as util
-import pygrib, time
+import pygrib
 
 pd.set_option('float_format', '{:f}'.format)
 
@@ -14,6 +20,8 @@ file_location = '/data3/lanceu/server/data/3Drefl/'
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
+
+start_time = time.time()
 
 def process_height_data(height):
 
