@@ -16,7 +16,11 @@ import plotly_heatmap
 import plotly_volume
 import plotly_volume_animation
 
+<<<<<<< HEAD
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
+=======
+config = json.load(open("/home/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
+>>>>>>> 3DVisSys/main
 
 # delete all files in a directory (used after graphs are created to empty data folders)
 def delete_dir(dir):
@@ -63,9 +67,13 @@ def find_newest_time(data_type):
 
     return formatted_string
 
+<<<<<<< HEAD
 # used to call make_figure in file type scripts and save to file system
 def create_figure(graph_type, file_time, h, w):
     # call script based on given parameters
+=======
+def create_figure(graph_type, file_time, h, w):
+>>>>>>> 3DVisSys/main
     if graph_type == "3Drefl":
         fig = plotly_volume.make_figure(download_time=file_time, h = 750, w = 1000)
     elif graph_type == "3Danim":
@@ -73,11 +81,17 @@ def create_figure(graph_type, file_time, h, w):
     elif graph_type == "2Dprecip":
         fig = plotly_heatmap.make_figure(download_time=file_time, h = 750, w = 1000)
 
+<<<<<<< HEAD
     # save file to data3 folder
     file = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
     with open(file, 'w') as f:
         f.write(plotly.io.to_json(fig))
     print(f"{graph_type} graph created at {file}")
+=======
+    file = f"/home/lanceu/server/graphs/{graph_type}/{file_time[1:-3]}.json"
+    with open(file, 'w') as f:
+        f.write(plotly.io.to_json(fig))
+>>>>>>> 3DVisSys/main
 
 # checks if there is substantial rain data using smaller 2d file; if True collect 3D data files and create 3D graph
 def check_2d(file_time):
@@ -120,6 +134,7 @@ def download_3d():
 
         if check_2d(file_time) is False: # check if there are at least 50 points to graph
             print("Skipping 3D graph creation.")
+<<<<<<< HEAD
         else:
             for height in heights:
                 url = folder_url + height + url_file_name + height + file_extension
@@ -132,6 +147,24 @@ def download_3d():
 
         current_time = datetime.now().time()
         print(f"Finished hourly graph creation at {current_time}.\n\n")
+=======
+            return
+
+        for height in heights:
+            url = folder_url + height + url_file_name + height + file_extension
+            location = file_location + file_name + height + file_time + file_extension
+
+            download(url, location)
+
+        create_figure("3Drefl", file_time, h=750, w=1000)
+
+        create_figure("3Danim", file_time, h=750, w=1000)
+
+        delete_dir(file_location)
+
+        current_time = datetime.now().time()
+        print(f"Finished 3D graph creation at {current_time}.")
+>>>>>>> 3DVisSys/main
     except ValueError:
         return "error in download_3d"    
 

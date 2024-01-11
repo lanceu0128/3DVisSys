@@ -10,13 +10,32 @@ coords = {
     "lon1": -80,
     "lon2": -75
 }
+<<<<<<< HEAD:server/plotly_heatmap.py
+<<<<<<< HEAD:server/plotly_heatmap.py
+=======
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
 
 def grab_data():
     global coords
 
-    grbs = pygrib.open("/data3/lanceu/server/data/2Dprecip/MRMS_PrecipRate.grib2")
+<<<<<<< HEAD:server/plotly_heatmap.py
+    grbs = pygrib.open("/home/lanceu/server/data/2Dprecip/MRMS_PrecipRate.grib2")
     grb = grbs[1]
 
+=======
+
+def grab_data():
+    global coords
+
+    grbs = pygrib.open("data/2Dprecip/MRMS_PrecipRate.grib2")
+    grb = grbs[1]
+
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
+=======
+    grbs = pygrib.open("data/2Dprecip/MRMS_PrecipRate.grib2")
+    grb = grbs[1]
+
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
     data, lats, lons = grbs[1].data(lat1=37, lat2=40, lon1= -80 + 360, lon2=-75 + 360)
     lons -= 360
 
@@ -46,26 +65,34 @@ def make_figure(download_time, h, w):
         zmax=64,
         # implements log scale
         colorscale= [
-            [0, 'rgb(0, 127, 255)'],         
-            [1/128-0.001, 'rgb(0, 127, 255)'],          
-            [1/128, 'rgb(0, 255, 255)'], 
-            [1/64-0.001, 'rgb(0, 255, 255)'], 
-            [1/64, 'rgb(0, 255, 127)'],    
-            [1/32-0.001, 'rgb(0, 255, 127)'],
-            [1/32, 'rgb(0, 255, 0)'],    
-            [1/16-0.001, 'rgb(0, 255, 0)'],
-            [1/16, 'rgb(127, 255, 0)'],     
-            [1/8-0.001, 'rgb(127, 255, 0)'],
-            [1/8, 'rgb(255, 255, 0)'],       
-            [1/4-0.001, 'rgb(255, 255, 0)'], 
-            [1/4, 'rgb(255, 127, 0)'],
-            [1/2-0.001, 'rgb(255, 127, 0)'],
-            [1/2, 'rgb(255, 0, 0)'],
-            [1, 'rgb(255, 0, 0)']
+            [0, 'rgb(25, 132, 197)'],         
+            [1/128-0.001, 'rgb(25, 132, 197)'],          
+            [1/128, 'rgb(34, 167, 240)'], 
+            [1/64-0.001, 'rgb(34, 167, 240)'], 
+            [1/64, 'rgb(99, 191, 240)'],    
+            [1/32-0.001, 'rgb(99, 191, 240)'],
+            [1/32, 'rgb(167, 213, 237)'],    
+            [1/16-0.001, 'rgb(167, 213, 237)'],
+            [1/16, 'rgb(225, 166, 146)'],     
+            [1/8-0.001, 'rgb(225, 166, 146)'],
+            [1/8, 'rgb(222, 110, 86)'],       
+            [1/4-0.001, 'rgb(222, 110, 86)'], 
+            [1/4, 'rgb(225, 75, 49)'],
+            [1/2-0.001, 'rgb(225, 75, 49)'],
+            [1/2, 'rgb(194, 55, 40)'],
+            [1, 'rgb(194, 55, 40)']
         ],
         colorbar=dict(
+<<<<<<< HEAD:server/plotly_heatmap.py
+<<<<<<< HEAD:server/plotly_heatmap.py
             
             title="Rain-Rate<br>(mm/h)",
+=======
+            title="mm",
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
+=======
+            title="mm",
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
             thickness=20,
             tickvals=[0.5, 1, 2, 4, 8, 16, 32, 64],
             ticklen=0, 
@@ -113,5 +140,13 @@ def make_figure(download_time, h, w):
     return fig
 
 if __name__ == "__main__":
+<<<<<<< HEAD:server/plotly_heatmap.py
+<<<<<<< HEAD:server/plotly_heatmap.py
     fig = make_figure("test", 650, 1000)
     fig.show()
+=======
+    make_figure("test", 650, 1000)
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py
+=======
+    make_figure("test", 650, 1000)
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_heatmap.py

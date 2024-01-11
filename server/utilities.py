@@ -1,6 +1,7 @@
 from multiprocessing import Pool
 from geopy.geocoders import Nominatim
 import numpy as np
+<<<<<<< HEAD
 import pandas as pd
 import time, json, urllib, requests
 import plotly, pygrib, netCDF4
@@ -8,6 +9,9 @@ import plotly.graph_objects as go
 from scipy.interpolate import griddata
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, colorConverter
+=======
+import pygrib, time, json, urllib, requests
+>>>>>>> 3DVisSys/main
 
 start_time = time.time()
 locations = {}
@@ -18,7 +22,11 @@ file_extension = "_20210708-120040" +'.grib2'
 height = "00.50" # any height will work for location data
 
 # takes large arrays and creates smaller array of 5x5 means of original
+<<<<<<< HEAD
 def pool_array(data, pool_size, stride, max=False):
+=======
+def pool_array(data, pool_size, stride):
+>>>>>>> 3DVisSys/main
     pools = []
     pooled = []
 
@@ -30,15 +38,20 @@ def pool_array(data, pool_size, stride, max=False):
     new_shape = (int(data.shape[0] / pool_size), int(data.shape[1] / pool_size)) 
 
     for pool in pools: # make new pooled array as Python array first to append first
+<<<<<<< HEAD
         if max == False:
             pooled.append(round(np.mean(pool), 5)) # can be changed to min, max, or mean; rounded by 3 significant figures
         else:
             pooled.append(round(np.max(pool), 10))
+=======
+        pooled.append(round(np.mean(pool), 3)) # can be changed to min, max, or mean; rounded by 3 significant figures
+>>>>>>> 3DVisSys/main
         
     return np.array(pooled).reshape(new_shape) # convert to NumpyArray and reshape
 
 # processes geoJSON of maryland area map for Volume plot
 def process_map_geojson():
+<<<<<<< HEAD
     states = ['maryland-counties.geojson', 
     'Pennsylvania_County_Boundaries.geojson', 
     'Virginia_Counties_Generalized.geojson',
@@ -95,6 +108,31 @@ def process_map_geojson():
     z = 0 * np.ones(len(x))
 
     return x, y, z, filtered_colors
+=======
+    map_url = "https://raw.githubusercontent.com/frankrowe/maryland-geojson/master/maryland-regions.geojson"
+
+    with urllib.request.urlopen(map_url) as url:
+        jdata = json.loads(url.read().decode())
+
+    pts = []
+
+    for feature in jdata['features']:
+        if feature['geometry']['type'] == 'Polygon':
+            pts.extend(feature['geometry']['coordinates'][0])    
+            pts.append([None, None])#mark the end of a polygon   
+            
+        elif feature['geometry']['type'] == 'MultiPolygon':
+            for polyg in feature['geometry']['coordinates']:
+                pts.extend(polyg[0])
+                pts.append([None, None])#end of polygon
+        elif feature['geometry']['type'] == 'LineString': 
+            points.extend(feature['geometry']['coordinates'])
+            points.append([None, None])
+    y, x = zip(*pts)    
+    z = 0 * np.ones(len(x))
+
+    return x, y, z
+>>>>>>> 3DVisSys/main
 
 def get_locations(lats, lons):
     global locations
@@ -143,6 +181,7 @@ def download_location(i, coord):
 
     time.sleep(5) # don't spam API and get banned
 
+<<<<<<< HEAD
 # function taken from the plotly documentation; converts matplotlib colormaps to plotly colorscales
 def matplotlib_to_plotly(cmap, pl_entries):
     h = 1.0/(pl_entries-1)
@@ -216,6 +255,8 @@ def elevation_map():
 
     return elevation_map, ocean_map
 
+=======
+>>>>>>> 3DVisSys/main
 # grabs location data from OpenStreetMap for all latitude/longitude coordinates in pooled data
 def download_locations():
     global locations
@@ -266,6 +307,10 @@ def fix_locations():
     print(new_locations)
     
 if __name__ == '__main__':
+<<<<<<< HEAD
     _, ocean_map = elevation_map()
     fig = go.Figure(data = [ocean_map])
     fig.show()
+=======
+    fix_locations()
+>>>>>>> 3DVisSys/main

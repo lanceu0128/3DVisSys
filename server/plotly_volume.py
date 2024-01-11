@@ -1,27 +1,29 @@
-# python library imports
 from multiprocessing import Pool
 from datetime import datetime
-import utilities as util
-import time
-
-# plotly imports
 import plotly.graph_objects as go
 import plotly.io as pio
-
-# data libraries
 import numpy as np
 import pandas as pd
-import pygrib
+import utilities as util
+import pygrib, time
 
 pd.set_option('float_format', '{:f}'.format)
 
+start_time = time.time()
+
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
-file_location = '/data3/lanceu/server/data/3Drefl/'
+<<<<<<< HEAD:server/plotly_volume.py
+<<<<<<< HEAD:server/plotly_volume.py
+file_location = '/home/lanceu/server/data/3Drefl/'
+=======
+file_location = 'data/3Drefl/'
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_volume.py
+=======
+file_location = 'data/3Drefl/'
+>>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_volume.py
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
-
-start_time = time.time()
 
 def process_height_data(height):
 
@@ -31,14 +33,12 @@ def process_height_data(height):
     # data, lats, lons = grb[1].data(lat1=35, lat2=35.5, lon1=-80+360, lon2=-79.5+360) #test for zoomed in area
     data, lats, lons = grb[1].data(lat1=37, lat2=40, lon1=-80+360, lon2=-75+360)
 
-    print(lats.shape, lons.shape, data.shape)
-
     data[data < 0] = 0
     lons -= 360
 
     pooled_lats = util.pool_array(lats, 5, 5)
     pooled_lons = util.pool_array(lons, 5, 5)
-    pooled_data = util.pool_array(data, 5, 5, max=True)
+    pooled_data = util.pool_array(data, 5, 5)
     locations = util.get_locations(pooled_lats, pooled_lons)
     heights = np.full(pooled_data.shape, float(height))
 
@@ -68,7 +68,7 @@ def make_figure(download_time, h, w):
     file_time = download_time
 
     df = grab_data()
-    elevation_map, ocean_map = util.elevation_map()
+    map_x, map_y, map_z = util.process_map_geojson()
 
     volume_plot = go.Volume(
         x = df['lat'],
@@ -76,22 +76,32 @@ def make_figure(download_time, h, w):
         z = df['heights'],
         value = df["data"],
         isomin = 0.1,
-        isomax = 50,
-        opacity = 0.25, # best so far: 0.2
-        surface_count = 5, #best so far: 5
+        isomax = df['data'].max(),
+        opacity = 0.2, # best so far: 0.2
+        surface_count = 9, #best so far: 5
         customdata = df['locations'],
-        hovertemplate = "Relectivity: %{value} dBZ <br>Latitude: %{x} <br>Longitude: %{y} <br>Height: %{z} km <br>Location: %{customdata}<extra></extra>",
-        colorscale = "jet",
-        colorbar = dict(
-            title = "dbZ",
-            thickness = 20,
-            ticklen = 0, 
-            tickcolor = 'black',
-            tickfont = dict(size=14, color='black')
+        hovertemplate = """Reflectivity: %{z:.3f} dBZ <br>Latitude: %{x:.3f} <br>Longitude: %{y:.3f} <br>Location: %{customdata}<extra></extra>""",
+        colorscale= "jet",
+        colorbar=dict(
+            title="dbZ",
+            thickness=20,
+            ticklen=0, 
+            tickcolor='black',
+            tickfont=dict(size=14, color='black')
         )
     )
 
-    fig = go.Figure(data = [volume_plot, elevation_map])
+    map_plot = go.Scatter3d(
+        x = map_x,
+        y = map_y,
+        z = map_z,
+        mode='lines',
+        line_color='#0a0a0a',
+        hovertemplate = "Latitude: %{x:.2f} <br>Longitude: %{y:.2f}<extra></extra>",
+        line_width=1.5
+    )
+
+    fig = go.Figure(data = [volume_plot, map_plot])
 
     fig.update_layout(
         title = f"Reflectivity {download_time[1:]}",
@@ -99,19 +109,24 @@ def make_figure(download_time, h, w):
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
             zaxis_title = "Height [km; MSL]",
-            aspectmode = 'manual',
-            aspectratio = dict(x=1, y=1, z=1), 
-            xaxis = dict(range=[37, 40], showgrid=False),
-            yaxis = dict(range=[-80, -76], showgrid=False),
-            zaxis = dict(range=[0, 15], showgrid=True),
-        ),
+            aspectmode='manual',
+            aspectratio=dict(x=1, y=1, z=1), 
+            xaxis=dict(
+                range=[37, 40],  
+                autorange=False  
+            ),
+            yaxis=dict(
+                range=[-80, -75],
+                autorange=False  
+            ),
+            zaxis=dict(
+                range=[0, 19],  
+                autorange=False  
+            )
+        )
     )
-
-    fig.update_scenes(yaxis_autorange="reversed")
 
     return fig
 
 if __name__ == "__main__":
-    file_location = '/data3/lanceu/server/testdata/SampleData/' #testing only
-    fig = make_figure("_20210708-120040", 600, 1000) # testing only
-    fig.show()
+    make_figure("_20210708-120040", 600, 1000)
