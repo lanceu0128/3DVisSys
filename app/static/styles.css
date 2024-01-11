@@ -1,0 +1,48 @@
+body {
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.navbar {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.navbar-logo {
+    width: 25px;
+    /* Set your preferred width */
+    height: auto;
+    /* Preserve aspect ratio */
+}
+
+.tempus-dominus-widget {
+    margin: auto;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 5px !important;
+}
+
+.rounded-bottom-left {
+    border-bottom-left-radius: 5px;
+}
+
+.rounded-bottom-right {
+    border-bottom-right-radius: 5px;
+}
+
+.dropdown-item:hover {
+    color: black !important;
+}
+
+.table-condensed {
+    margin: auto !important;
+}
+
+.plotly .svg-container {
+    margin: auto !important;
+}
