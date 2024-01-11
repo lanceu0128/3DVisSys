@@ -10,15 +10,8 @@ import pygrib, time, json
 start_time = time.time()
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
-<<<<<<< HEAD:server/plotly_volume_animation.py
-<<<<<<< HEAD:server/plotly_volume_animation.py
-file_location = '/home/lanceu/server/data/3Drefl/'
-=======
-file_location = 'data/3Drefl/'
->>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_volume_animation.py
-=======
-file_location = 'data/3Drefl/'
->>>>>>> 171ada4ad4dd1e64b822c0393487e39b2d7a05ea:app/plotly_volume_animation.py
+file_location = '/data3/lanceu/server/data/3Drefl/'
+# file_location = '/data3/lanceu/server/testdata/SampleData/' #testing only
 file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
@@ -36,7 +29,7 @@ def process_height_data(height):
 
     pooled_lats = util.pool_array(lats, 5, 5)
     pooled_lons = util.pool_array(lons, 5, 5)
-    pooled_data = util.pool_array(data, 5, 5)
+    pooled_data = util.pool_array(data, 5, 5, max=True)
     locations = util.get_locations(pooled_lats, pooled_lons)
     heights = np.full(pooled_data.shape, float(height))
 
@@ -56,7 +49,7 @@ def grab_data():
 
     df = pd.concat(height_frames, ignore_index=True, sort=False)
     print(df.describe())
-    print(df.head(10))
+    print(df.sort_values(by=['data'], ascending=False).head(10))
     print("Figure Data Grabbed")
 
     return df
@@ -65,54 +58,61 @@ def make_figure(download_time, h, w):
     global file_time
     file_time = download_time
 
-    df = grab_data()
-    map_x, map_y, map_z = util.process_map_geojson()
+    fig = go.Figure()
 
-    fig = go.Figure(frames = [go.Frame(data = go.Volume(
-                x = df.loc[df['heights'] == height, 'lat'],
-                y = df.loc[df['heights'] == height, 'lon'],
-                z = df.loc[df['heights'] == height, 'heights'],
-                value = df.loc[df['heights'] == height, 'data'],
-                isomin = 0.1,
-                isomax = df['data'].max(),
-                opacity = 1,
-                surface_count = 17,
-                customdata = df['locations'],
-                hovertemplate = """Relectivity: %{value:.3f} dBZ <br>Latitude: %{x:.3f} <br>Longitude: %{y:.3f} <br>Height: {z:.3f} <br>Location: %{customdata}<extra></extra>""",
-                colorscale= "jet",
-                colorbar=dict(
-                    title="dbZ",
-                    thickness=20,
-                    ticklen=0, 
-                    tickcolor='black',
-                    tickfont=dict(size=14, color='black')
-                )
-            ),
-        name = str(height)
-        )
-    for height in df['heights'].unique().tolist()])
+    df = grab_data()
+    elevation_map, _ = util.elevation_map()
 
     fig.add_trace(
         go.Volume(
-                x = df.loc[df['heights'] == 0.5, 'lat'],
-                y = df.loc[df['heights'] == 0.5, 'lon'],
-                z = df.loc[df['heights'] == 0.5, 'heights'],
-                value = df.loc[df['heights'] == 0.5, 'data'],
-                isomin = df['data'].min()+0.1,
-                isomax = df['data'].max(),
-                opacityscale = "uniform",
-                surface_count = 17, # needs to be a large number for good volume rendering,
-                colorscale= "jet",
-                colorbar=dict(
-                    title="dbZ",
-                    thickness=20,
-                    ticklen=0, 
-                    tickcolor='black',
-                    tickfont=dict(size=14, color='black')
-                )
+            x = df.loc[df['heights'] == 0.5, 'lat'],
+            y = df.loc[df['heights'] == 0.5, 'lon'],
+            z = df.loc[df['heights'] == 0.5, 'heights'],
+            value = df.loc[df['heights'] == 0.5, 'data'],
+            isomin = df['data'].min()+0.1,
+            isomax = 50,
+            opacityscale = "uniform",
+            surface_count = 1, # needs to be a large number for good volume rendering,
+            colorscale= "jet",
+            colorbar=dict(
+                title="dbZ",
+                thickness=20,
+                ticklen=0, 
+                tickcolor='black',
+                tickfont=dict(size=14, color='black')
             )
+        )
     )
 
+    frames = [
+    go.Frame(data=[go.Volume(
+            x=df.loc[df['heights'] == height, 'lat'],
+            y=df.loc[df['heights'] == height, 'lon'],
+            z=df.loc[df['heights'] == height, 'heights'],
+            value=df.loc[df['heights'] == height, 'data'],
+            isomin=0.1,
+            isomax=df['data'].max(),
+            opacity=1,
+            surface_count=1,
+            customdata=df['locations'],
+            hovertemplate="""Relectivity: %{value} dBZ <br>Latitude: %{x} <br>Longitude: %{y} <br>Height: %{z} km <br>Location: %{customdata} <extra></extra>""",
+            colorscale="jet",
+            colorbar=dict(
+                title="dbZ",
+                thickness=20,
+                ticklen=0,
+                tickcolor='black',
+                tickfont=dict(size=14, color='black')
+            )
+        )],
+            name=str(height)
+        )
+        for height in df['heights'].unique().tolist()
+    ]
+
+    fig.frames = frames
+
+    fig.add_trace(elevation_map)
 
     def frame_args(duration):
         return {
@@ -138,7 +138,6 @@ def make_figure(download_time, h, w):
             ],
         }
     ]
-
     # Layout
     fig.update_layout(
         title = f"Reflectivity (Animated) {download_time[1:]}",
@@ -185,7 +184,11 @@ def make_figure(download_time, h, w):
         sliders=sliders
     )
 
+    fig.update_scenes(yaxis_autorange="reversed")
+
     return fig
 
 if __name__ == '__main__':
-    make_figure("_20210708-120040", 600, 1000)
+    file_location = '/data3/lanceu/server/testdata/SampleData/' # testing only
+    fig = make_figure("_20210708-120040", 600, 1000) # testing only
+    fig.show()
