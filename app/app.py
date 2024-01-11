@@ -12,7 +12,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-config = json.load(open("/home/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
+config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 
 # returns every date that the file system contains
 def get_valid_dates():
@@ -89,9 +89,9 @@ def return_dated_graph(date):
     if request.method == 'POST':
         print("received graph_by_date post request")
 
-        refl = get_dated_graph('/data3/lanceu/server/graphs/3Drefl', date)
-        anim = get_dated_graph('/data3/lanceu/server/graphs/3Danim', date)
-        precip = get_dated_graph('/data3/lanceu/server/graphs/2Dprecip', date)        
+        refl = get_dated_graph('/data3/lanceu/graphs/3Drefl', date)
+        anim = get_dated_graph('/data3/lanceu/graphs/3Danim', date)
+        precip = get_dated_graph('/data3/lanceu/graphs/2Dprecip', date)        
 
         rendered_template = render_template(
             'graphs.html',
@@ -109,9 +109,9 @@ def return_latest_graph():
     if request.method == 'POST':
         print("received graph_latest post request")
 
-        refl = get_newest_graph('/data3/lanceu/server/graphs/3Drefl')
-        anim = get_newest_graph('/data3/lanceu/server/graphs/3Danim')
-        precip = get_newest_graph('/data3/lanceu/server/graphs/2Dprecip')
+        refl = get_newest_graph('/data3/lanceu/graphs/3Drefl')
+        anim = get_newest_graph('/data3/lanceu/graphs/3Danim')
+        precip = get_newest_graph('/data3/lanceu/graphs/2Dprecip')
 
         date = get_valid_dates()
         date = date[len(date)-1]

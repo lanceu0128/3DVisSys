@@ -7,6 +7,8 @@ import pandas as pd
 import utilities as util
 import pygrib, time
 
+start_time = time.time()
+
 pd.set_option('float_format', '{:f}'.format)
 
 heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
@@ -30,7 +32,7 @@ def process_height_data(height):
 
     pooled_lats = util.pool_array(lats, 5, 5)
     pooled_lons = util.pool_array(lons, 5, 5)
-    pooled_data = util.pool_array(data, 5, 5, max=True)
+    pooled_data = util.pool_array(data, 5, 5)
     locations = util.get_locations(pooled_lats, pooled_lons)
     heights = np.full(pooled_data.shape, float(height))
 
