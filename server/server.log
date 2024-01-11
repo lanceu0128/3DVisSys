@@ -19,3 +19,10 @@ Skipping 3D graph creation.
 Finished hourly graph creation at 23:00:09.484963.
 
 
+Starting scheduled download
+Downloading from url https://mrms.ncep.noaa.gov/data/2D/PrecipRate/MRMS_PrecipRate.latest.grib2.gz into /data3/lanceu/server/data/2Dprecip/MRMS_PrecipRate.latest.grib2.gz
+Skipping 2D graph creation at _2024-01-11_04-59. 8 values greater than 0 found
+Skipping 3D graph creation.
+Finished hourly graph creation at 00:00:09.686484.
+
+
