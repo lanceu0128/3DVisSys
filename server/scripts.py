@@ -116,7 +116,7 @@ def check_2d(file_time):
 # basically the "__main__" function. checks for precipitation data and donwloads/visualizes reflectivity accordingly
 def download_3d():
     try:
-        logging.info(f"==================================================")
+        logging.info(f"==========================================================================================")
         logging.info(f"Starting scheduled download.")
 
         now = datetime.now()
