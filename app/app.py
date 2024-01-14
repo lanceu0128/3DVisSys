@@ -1,6 +1,5 @@
 # flask imports
 from flask import Flask, render_template, request, jsonify, url_for
-from apscheduler.schedulers.background import BackgroundScheduler
 
 # python library imports
 from datetime import datetime

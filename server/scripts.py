@@ -1,7 +1,3 @@
-# flask imports
-from flask import Flask, render_template, request, jsonify, url_for
-from apscheduler.schedulers.background import BackgroundScheduler
-
 # python library imports
 from datetime import datetime
 import gzip, shutil, os, json, requests, time
@@ -71,7 +67,7 @@ def create_figure(graph_type, file_time, h, w):
     elif graph_type == "2Dprecip":
         fig = plotly_heatmap.make_figure(download_time=file_time, h = 750, w = 1000)
 
-    file = f"/home/lanceu/server/graphs/{graph_type}/{file_time[1:-3]}.json"
+    file = f"/home/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
     with open(file, 'w') as f:
         f.write(plotly.io.to_json(fig))
 
