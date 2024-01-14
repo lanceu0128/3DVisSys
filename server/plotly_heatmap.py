@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 import numpy as np
-import pygrib
+import pygrib, logging
 import pandas as pd
 import utilities as util
 
@@ -11,8 +11,13 @@ coords = {
     "lon2": -75
 }
 
+logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
+                    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
 def grab_data():
     global coords
+
+    logging.info(f"Starting heatmap data processing.")
 
     grbs = pygrib.open("/data3/lanceu/server/data/2Dprecip/MRMS_PrecipRate.grib2")
     grb = grbs[1]
@@ -27,7 +32,8 @@ def grab_data():
 
     df_dict = {'lats': pooled_lats.flatten(), 'lons': pooled_lons.flatten(), 'data': pooled_data.flatten(), 'locations': locations.flatten()}
     df = pd.DataFrame(df_dict)
-    print(df.head(10))
+    logging.info(f"Finished heatmap data processing. Final data:")
+    logging.info(df.describe())
 
     return df
 
@@ -35,6 +41,8 @@ def make_figure(download_time, h, w):
     global coords
 
     df = grab_data()
+
+    logging.info("Starting Plotly heatmap graph creation.")
 
     fig = go.Figure(data = go.Densitymapbox(
         lat = df['lats'],
@@ -109,6 +117,8 @@ def make_figure(download_time, h, w):
         marker = { 'size': 10, 'color': "white" }
         )
     )
+
+    logging.info("Starting Plotly heatmap graph creation.")
 
     return fig
 

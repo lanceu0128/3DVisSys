@@ -5,7 +5,7 @@ import plotly.io as pio
 import numpy as np
 import pandas as pd
 import utilities as util
-import pygrib, time, json
+import pygrib, time, json, logging
 
 start_time = time.time()
 
@@ -16,9 +16,12 @@ file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
 
+logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
+                    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
 def process_height_data(height):
 
-    print(f"Processing {height} level data")
+    logging.info(f"Processing {height} level data")
 
     grb = pygrib.open(file_location + file_name + height + file_time + file_extension)
     # data, lats, lons = grb[1].data(lat1=35, lat2=35.5, lon1=-80+360, lon2=-79.5+360) #test for zoomed in area
@@ -33,25 +36,23 @@ def process_height_data(height):
     locations = util.get_locations(pooled_lats, pooled_lons)
     heights = np.full(pooled_data.shape, float(height))
 
-    print(f"{pooled_lats.shape}, {pooled_lons.shape}, {pooled_data.shape}, {locations.shape}, {heights.shape}")
 
     df_dict = {"lat": pooled_lats.flatten(), "lon": pooled_lons.flatten(), "data": pooled_data.flatten(), "locations": locations.flatten(), "heights": heights.flatten()}
     df = pd.DataFrame(df_dict)
 
     runtime = time.time() - start_time
-    print(f"Finished processing {height} data in {runtime}")
+    logging.info(f"Finished processing {height} data in {runtime}.")
 
     return df
 
 def grab_data():
+    logging.info("Starting volume animation data processing and multithreading.")
     pool = Pool(28)
     height_frames = pool.map(process_height_data, heights) # next get data values at heights
 
     df = pd.concat(height_frames, ignore_index=True, sort=False)
-    print(df.describe())
-    print(df.sort_values(by=['data'], ascending=False).head(10))
-    print("Figure Data Grabbed")
-
+    logging.info("Finished volume processing data for all heights. Final data:")
+    logging.info(df.describe())
     return df
 
 def make_figure(download_time, h, w):
@@ -62,6 +63,8 @@ def make_figure(download_time, h, w):
 
     df = grab_data()
     elevation_map, _ = util.elevation_map()
+
+    logging.info("Starting Plotly volume animation graph creation.")
 
     fig.add_trace(
         go.Volume(
@@ -186,6 +189,7 @@ def make_figure(download_time, h, w):
 
     fig.update_scenes(yaxis_autorange="reversed")
 
+    logging.info("Finished Plotly volume graph creation.")
     return fig
 
 if __name__ == '__main__':
