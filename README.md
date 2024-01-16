@@ -25,4 +25,4 @@ For users who want to try creating their own visualizations, running in one's lo
 
 2. **Switch into the server directory and run the server:**
     1. From the root directory, run `cd server`.
-    2. Run `python scripts.py` to create graphs for the current time. Users may also want to create a cronjob or other scheduler to run the file at certain times.
+    2. Run `python scripts.py` to create graphs for the current time. Users may also want to use cronjob or another scheduler to run the file at certain times. An example crontab used in development to run the script hourly can be found in `server/cronjob.txt`.
