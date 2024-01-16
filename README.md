@@ -6,6 +6,8 @@
 A live version of 3DVisSys is being deployed soon!
 
 ## Running the App
+For users who want to view and interact with graphs, running in one's local environment can be done by installing all requirements and running the Flask app:
+
 1. **Install all requirements:**
     - For Conda users: Run `conda env create -f environment.yml` and switch into the new environment.
     - Pip users: Run `pip install -r requirements.txt`
