@@ -1,6 +1,6 @@
 # 3DVisSys
 ## Introduction
-3DVisSys, or 3D Visualization System, is free open-source software for examining NOAA MRMS precipitation and reflectivity data with 3D interactive visualizations directly in the browser. It features a web application to load and interact with visualizations, as well as backend data pipelines that create those visualizations 24/7. It was primarily built with Flask and Plotly. 
+3DVisSys, or 3D Visualization System, is free open-source software for examining NOAA MRMS precipitation and reflectivity data with 3D interactive visualizations directly in the browser. It features a web application to load and interact with visualizations, as well as backend data pipelines that create those visualizations 24/7. It was primarily built with Python 3.9, Flask and Plotly. 
 
 ## Instructions
 ### Running the App
