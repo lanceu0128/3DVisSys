@@ -7,11 +7,12 @@
 For users who want to view and interact with graphs, running in one's local envrionment an be done by installing all requirements and running the Flask app:
 
 1. Install all requirements:
-a. For Conda users: Run `conda env create -f environment.yml` and switch into new environment.
-b. Pip users: Run `pip install -r requirements.txt`
-2. Switch into app directory and run:
-i. From the root directory, run `cd app`
-ii. Run `Flask run` 
+    a. For Conda users: Run `conda env create -f environment.yml` and switch into the new environment.
+    b. Pip users: Run `pip install -r requirements.txt`
+
+2. Switch into the app directory and run:
+    i. From the root directory, run `cd app`
+    ii. Run `Flask run`
 
 ### Running the Backend
 For users who want to try running the backend pipelines themselves, running in one's local environment can be done by installing all requirements and running the server directory:
