@@ -1,0 +1,5 @@
+2024-01-16 15:39:15,901 - root - INFO - ==========================================================================================
+2024-01-16 15:39:15,901 - root - INFO - Starting scheduled download.
+2024-01-16 15:39:16,326 - root - INFO - Checking for substantial precipitation data during time _2024-01-16_20-37.
+2024-01-16 15:39:23,558 - root - INFO - Creating figure for graph type 2Dprecip and time _2024-01-16_20-38.
+2024-01-16 15:39:23,558 - root - INFO - Starting heatmap data processing.

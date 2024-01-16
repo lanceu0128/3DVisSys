@@ -14,23 +14,24 @@ import plotly_volume_animation
 
 logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-config = json.load(open("/home/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
+
+config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 
 # delete all files in a directory (used after graphs are created to empty data folders)
 def delete_dir(dir):
     try:
-        logging.info(f"Cleaning all files in directory {dir}.")
+        logging.info(f"Cleaning all files in directory %s.", dir)
         
         for f in os.listdir(dir): # iterate through every file in dir
             os.remove(os.path.join(dir, f)) # remove file with path dir/f
 
-        logging.info(f"Deleted files in directory {dir}.")
+        logging.info(f"Deleted files in directory %s.", dir)
     except Exception as e:
         logging.exception("EXCEPTION in delete_dir():")
 
 def download(url, location):
     try:
-        logging.info(f"Downloading data from url {url} into {location}.")
+        logging.debug(f"Downloading data from url %s into %s.", url, location)
 
         unzip_location = location.replace(".gz", "").replace(".latest", "")
 
@@ -41,7 +42,7 @@ def download(url, location):
             with open(unzip_location, 'wb') as outfile:
                 shutil.copyfileobj(infile, outfile)
 
-        logging.info(f"Download successful.")
+        logging.debug(f"Download successful.")
 
         return unzip_location
     except Exception as e:
@@ -70,7 +71,7 @@ def find_newest_time(data_type):
 
 def create_figure(graph_type, file_time):
     try:
-        logging.info("Creating figure for graph type {graph_type} and time {file_time}.")
+        logging.info("Creating figure for graph type %s and time %s.", graph_type, file_time)
 
         if graph_type == "3Drefl":
             fig = plotly_volume.make_figure(download_time=file_time, h=750, w=1000)
@@ -79,18 +80,18 @@ def create_figure(graph_type, file_time):
         elif graph_type == "2Dprecip":
             fig = plotly_heatmap.make_figure(download_time=file_time, h=750, w=1000)
 
-        file = f"/home/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
+        file = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
         with open(file, 'w') as f:
             f.write(plotly.io.to_json(fig))
 
         logging.info("Figure creation successful. File stored in {file}.")
     except Exception as e:
-        logging.error("EXCEPTION in create_figure():")
+        logging.exception("EXCEPTION in create_figure():")
 
 # checks if there is substantial rain data using smaller 2d file; if True collect 3D data files and create 3D graph
 def check_2d(file_time):
     try:
-        logging.info("Checking for substantial precipitation data during time {file_time}.")
+        logging.info("Checking for substantial precipitation data during time %s.", file_time)
 
         url = config['2D']['url']
         file = config['2D']['file_location'] + config['2D']['file']
@@ -102,22 +103,22 @@ def check_2d(file_time):
         vals_greater_0 = (data > 0).sum()
 
         if vals_greater_0 <= 49: 
-            logging.info(f"{vals_greater_0} values greater than 0 found. Skipping 2D graph creation for {file_time}.")
+            logging.info("%d values greater than 0 found. Skipping 2D graph creation for %s.", vals_greater_0, file_time)
             return False
 
         file_time = find_newest_time("2D")
         create_figure("2Dprecip", file_time)
 
-        logging.info(f"{vals_greater_0} values greater than 0 found. Finished 2D graph creation for {file_time}.")
+        logging.info("%d values greater than 0 found. Finished 2D graph creation for %s.", vals_greater_0, file_time)
         return True
     except Exception as e:
-        logging.error("EXCEPTION in check_2d:")
+        logging.exception("EXCEPTION in check_2d:")
 
 # basically the "__main__" function. checks for precipitation data and donwloads/visualizes reflectivity accordingly
 def download_3d():
     try:
-        logging.info(f"==========================================================================================")
-        logging.info(f"Starting scheduled download.")
+        logging.info("==========================================================================================")
+        logging.info("Starting scheduled download.")
 
         now = datetime.now()
         val_threshold = 0
@@ -134,19 +135,23 @@ def download_3d():
             logging.info("Not enough data. Skipping 3D graph creation.")
             return
 
+        logging.info("Starting downloading of 3D reflectivity data.")
+
         for height in heights:
             url = folder_url + height + url_file_name + height + file_extension
             location = file_location + file_name + height + file_time + file_extension
             download(url, location)
+
+        logging.info("Finished downloading of 3D reflectivity data.")
 
         create_figure("3Drefl", file_time)
         create_figure("3Danim", file_time)
         delete_dir(file_location)
 
         current_time = datetime.now().time()
-        logging.info(f"Finished 3D graph creation at {current_time}.")
+        logging.info("Finished 3D graph creation at {current_time}.")
     except Exception as e:
-        logging.error("EXCEPTION in download_3d():")    
+        logging.exception("EXCEPTION in download_3d():")    
 
 if __name__ == "__main__":
     download_3d()

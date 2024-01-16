@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
 
 def process_height_data(height):
 
-    logging.info(f"Processing {height} level data")
+    logging.debug(f"Processing %s level data", height)
 
     grb = pygrib.open(file_location + file_name + height + file_time + file_extension)
     # data, lats, lons = grb[1].data(lat1=35, lat2=35.5, lon1=-80+360, lon2=-79.5+360) #test for zoomed in area
@@ -43,7 +43,7 @@ def process_height_data(height):
     df = pd.DataFrame(df_dict)
 
     runtime = time.time() - start_time
-    logging.info(f"Finished processing {height} data in {runtime}.")
+    logging.debug(f"Finished processing %s data in %s.", height, str(runtime))
 
     return df
 

@@ -14,6 +14,7 @@ coords = {
 logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
+
 def grab_data():
     global coords
 
@@ -118,7 +119,7 @@ def make_figure(download_time, h, w):
         )
     )
 
-    logging.info("Starting Plotly heatmap graph creation.")
+    logging.info("Finished Plotly heatmap graph creation.")
 
     return fig
 
