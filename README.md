@@ -19,5 +19,5 @@ For users who want to try running the backend pipelines themselves, running in o
     - For Pip users: Run `pip install -r requirements.txt`
 
 2. **Switch into the server directory and run:**
-    - From the root directory, run `cd app`
-    - Run `python scripts.py` or create a crontab to run the file on a desired schedule.
+    1. From the root directory, run `cd app`
+    2. Run `python scripts.py` or create a crontab to run the file on a desired schedule.
