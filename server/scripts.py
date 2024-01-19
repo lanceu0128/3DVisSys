@@ -12,7 +12,7 @@ import plotly_heatmap
 import plotly_volume
 import plotly_volume_animation
 
-logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
+logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log", filemode="a",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
