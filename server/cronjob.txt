@@ -1,1 +1,1 @@
-0 * * * * /home/lanceu/anaconda3/envs/3dvissys/bin/python /data3/lanceu/server/scripts.py > /data3/lanceu/server/server.log 2>&1
+0 * * * * /home/lanceu/anaconda3/envs/3dvissys/bin/python /data3/lanceu/server/scripts.py
