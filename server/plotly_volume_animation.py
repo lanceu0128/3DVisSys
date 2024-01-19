@@ -16,7 +16,7 @@ file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = '.grib2'
 
-logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
+logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log", filemode="a",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 def process_height_data(height):

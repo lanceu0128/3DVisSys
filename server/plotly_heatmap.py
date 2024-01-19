@@ -11,9 +11,8 @@ coords = {
     "lon2": -75
 }
 
-logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
+logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log", filemode="a",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-
 
 def grab_data():
     global coords
