@@ -1,0 +1,216 @@
+2024-01-19 12:00:02,367 - root - INFO - ==========================================================================================
+2024-01-19 12:00:02,367 - root - INFO - Starting scheduled download.
+2024-01-19 12:00:02,671 - root - INFO - Checking for substantial precipitation data during time _2024-01-19_16-59.
+2024-01-19 12:00:09,345 - root - INFO - Creating figure for graph type 2Dprecip and time _2024-01-19_16-58.
+2024-01-19 12:00:09,346 - root - INFO - Starting heatmap data processing.
+2024-01-19 12:00:15,704 - root - INFO - Finished heatmap data processing. Final data:
+2024-01-19 12:00:15,708 - root - INFO -              lats        lons        data
+count 6000.000000 6000.000000 6000.000000
+mean    38.500000  -77.500000    0.402905
+std      0.865977    1.443424    0.626458
+min     37.025000  -79.975000    0.000000
+25%     37.762500  -78.737500    0.000000
+50%     38.500000  -77.500000    0.024000
+75%     39.237500  -76.262500    0.592000
+max     39.975000  -75.025000    3.776000
+2024-01-19 12:00:15,711 - root - INFO - Starting Plotly heatmap graph creation.
+2024-01-19 12:00:15,769 - root - INFO - Finished Plotly heatmap graph creation.
+2024-01-19 12:00:15,776 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 12:00:15,776 - root - INFO - 69364 values greater than 0 found. Finished 2D graph creation for _2024-01-19_16-58.
+2024-01-19 12:00:15,778 - root - INFO - Starting downloading of 3D reflectivity data.
+2024-01-19 12:00:20,539 - root - INFO - Finished downloading of 3D reflectivity data.
+2024-01-19 12:00:20,540 - root - INFO - Creating figure for graph type 3Drefl and time _2024-01-19_16-59.
+2024-01-19 12:00:20,540 - root - INFO - Starting volume data processing and multithreading.
+2024-01-19 12:00:43,808 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 12:00:43,838 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      2.321921      7.250000
+std        0.865907      1.443307      4.945396      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      1.160000     11.000000
+max       39.975000    -75.025000     29.480000     19.000000
+2024-01-19 12:00:48,842 - root - INFO - Starting Plotly volume graph creation.
+2024-01-19 12:00:48,926 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 12:00:49,563 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 12:00:49,563 - root - INFO - Creating figure for graph type 3Danim and time _2024-01-19_16-59.
+2024-01-19 12:00:49,564 - root - INFO - Starting volume animation data processing and multithreading.
+2024-01-19 12:01:12,827 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 12:01:12,859 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      3.066811      7.250000
+std        0.865907      1.443307      5.856558      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      4.500000     11.000000
+max       39.975000    -75.025000     33.500000     19.000000
+2024-01-19 12:01:18,021 - root - INFO - Starting Plotly volume animation graph creation.
+2024-01-19 12:01:23,315 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 12:01:27,837 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 12:01:27,837 - root - INFO - Cleaning all files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 12:01:27,845 - root - INFO - Deleted files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 12:01:27,845 - root - INFO - Finished 3D graph creation at {current_time}.
+2024-01-19 13:00:01,756 - root - INFO - ==========================================================================================
+2024-01-19 13:00:01,756 - root - INFO - Starting scheduled download.
+2024-01-19 13:00:02,033 - root - INFO - Checking for substantial precipitation data during time _2024-01-19_17-59.
+2024-01-19 13:00:08,659 - root - INFO - Creating figure for graph type 2Dprecip and time _2024-01-19_17-58.
+2024-01-19 13:00:08,659 - root - INFO - Starting heatmap data processing.
+2024-01-19 13:00:15,081 - root - INFO - Finished heatmap data processing. Final data:
+2024-01-19 13:00:15,086 - root - INFO -              lats        lons        data
+count 6000.000000 6000.000000 6000.000000
+mean    38.500000  -77.500000    0.410947
+std      0.865977    1.443424    0.645389
+min     37.025000  -79.975000    0.000000
+25%     37.762500  -78.737500    0.000000
+50%     38.500000  -77.500000    0.096000
+75%     39.237500  -76.262500    0.592000
+max     39.975000  -75.025000    4.692000
+2024-01-19 13:00:15,089 - root - INFO - Starting Plotly heatmap graph creation.
+2024-01-19 13:00:15,147 - root - INFO - Finished Plotly heatmap graph creation.
+2024-01-19 13:00:15,155 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 13:00:15,155 - root - INFO - 72694 values greater than 0 found. Finished 2D graph creation for _2024-01-19_17-58.
+2024-01-19 13:00:15,157 - root - INFO - Starting downloading of 3D reflectivity data.
+2024-01-19 13:00:19,672 - root - INFO - Finished downloading of 3D reflectivity data.
+2024-01-19 13:00:19,673 - root - INFO - Creating figure for graph type 3Drefl and time _2024-01-19_17-59.
+2024-01-19 13:00:19,673 - root - INFO - Starting volume data processing and multithreading.
+2024-01-19 13:00:42,939 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 13:00:42,964 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      2.314786      7.250000
+std        0.865907      1.443307      4.876365      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      1.400000     11.000000
+max       39.975000    -75.025000     31.440000     19.000000
+2024-01-19 13:00:47,952 - root - INFO - Starting Plotly volume graph creation.
+2024-01-19 13:00:48,037 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 13:00:48,689 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 13:00:48,689 - root - INFO - Creating figure for graph type 3Danim and time _2024-01-19_17-59.
+2024-01-19 13:00:48,690 - root - INFO - Starting volume animation data processing and multithreading.
+2024-01-19 13:01:11,968 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 13:01:11,995 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      3.055215      7.250000
+std        0.865907      1.443307      5.724993      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      4.500000     11.000000
+max       39.975000    -75.025000     33.000000     19.000000
+2024-01-19 13:01:16,980 - root - INFO - Starting Plotly volume animation graph creation.
+2024-01-19 13:01:22,229 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 13:01:26,771 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 13:01:26,771 - root - INFO - Cleaning all files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 13:01:26,779 - root - INFO - Deleted files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 13:01:26,779 - root - INFO - Finished 3D graph creation at {current_time}.
+2024-01-19 14:00:01,686 - root - INFO - ==========================================================================================
+2024-01-19 14:00:01,687 - root - INFO - Starting scheduled download.
+2024-01-19 14:00:02,033 - root - INFO - Checking for substantial precipitation data during time _2024-01-19_18-59.
+2024-01-19 14:00:08,718 - root - INFO - Creating figure for graph type 2Dprecip and time _2024-01-19_18-58.
+2024-01-19 14:00:08,718 - root - INFO - Starting heatmap data processing.
+2024-01-19 14:00:15,167 - root - INFO - Finished heatmap data processing. Final data:
+2024-01-19 14:00:15,172 - root - INFO -              lats        lons        data
+count 6000.000000 6000.000000 6000.000000
+mean    38.500000  -77.500000    0.349665
+std      0.865977    1.443424    0.623105
+min     37.025000  -79.975000    0.000000
+25%     37.762500  -78.737500    0.000000
+50%     38.500000  -77.500000    0.000000
+75%     39.237500  -76.262500    0.436000
+max     39.975000  -75.025000    3.688000
+2024-01-19 14:00:15,175 - root - INFO - Starting Plotly heatmap graph creation.
+2024-01-19 14:00:15,234 - root - INFO - Finished Plotly heatmap graph creation.
+2024-01-19 14:00:15,241 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 14:00:15,241 - root - INFO - 58640 values greater than 0 found. Finished 2D graph creation for _2024-01-19_18-58.
+2024-01-19 14:00:15,243 - root - INFO - Starting downloading of 3D reflectivity data.
+2024-01-19 14:00:19,522 - root - INFO - Finished downloading of 3D reflectivity data.
+2024-01-19 14:00:19,523 - root - INFO - Creating figure for graph type 3Drefl and time _2024-01-19_18-59.
+2024-01-19 14:00:19,523 - root - INFO - Starting volume data processing and multithreading.
+2024-01-19 14:00:42,830 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 14:00:42,860 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      1.693995      7.250000
+std        0.865907      1.443307      3.936179      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      0.380000     11.000000
+max       39.975000    -75.025000     31.140000     19.000000
+2024-01-19 14:00:47,867 - root - INFO - Starting Plotly volume graph creation.
+2024-01-19 14:00:47,951 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 14:00:48,604 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 14:00:48,604 - root - INFO - Creating figure for graph type 3Danim and time _2024-01-19_18-59.
+2024-01-19 14:00:48,605 - root - INFO - Starting volume animation data processing and multithreading.
+2024-01-19 14:01:12,019 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 14:01:12,047 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      2.434737      7.250000
+std        0.865907      1.443307      4.899185      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      2.500000     11.000000
+max       39.975000    -75.025000     33.000000     19.000000
+2024-01-19 14:01:17,057 - root - INFO - Starting Plotly volume animation graph creation.
+2024-01-19 14:01:22,290 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 14:01:26,671 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 14:01:26,671 - root - INFO - Cleaning all files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 14:01:26,680 - root - INFO - Deleted files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 14:01:26,680 - root - INFO - Finished 3D graph creation at {current_time}.
+2024-01-19 15:00:02,600 - root - INFO - ==========================================================================================
+2024-01-19 15:00:02,600 - root - INFO - Starting scheduled download.
+2024-01-19 15:00:02,824 - root - INFO - Checking for substantial precipitation data during time _2024-01-19_19-59.
+2024-01-19 15:00:09,522 - root - INFO - Creating figure for graph type 2Dprecip and time _2024-01-19_19-58.
+2024-01-19 15:00:09,523 - root - INFO - Starting heatmap data processing.
+2024-01-19 15:00:15,992 - root - INFO - Finished heatmap data processing. Final data:
+2024-01-19 15:00:15,997 - root - INFO -              lats        lons        data
+count 6000.000000 6000.000000 6000.000000
+mean    38.500000  -77.500000    0.205537
+std      0.865977    1.443424    0.372199
+min     37.025000  -79.975000    0.000000
+25%     37.762500  -78.737500    0.000000
+50%     38.500000  -77.500000    0.000000
+75%     39.237500  -76.262500    0.316000
+max     39.975000  -75.025000    3.548000
+2024-01-19 15:00:16,000 - root - INFO - Starting Plotly heatmap graph creation.
+2024-01-19 15:00:16,057 - root - INFO - Finished Plotly heatmap graph creation.
+2024-01-19 15:00:16,064 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 15:00:16,064 - root - INFO - 51733 values greater than 0 found. Finished 2D graph creation for _2024-01-19_19-58.
+2024-01-19 15:00:16,066 - root - INFO - Starting downloading of 3D reflectivity data.
+2024-01-19 15:00:22,360 - root - INFO - Finished downloading of 3D reflectivity data.
+2024-01-19 15:00:22,361 - root - INFO - Creating figure for graph type 3Drefl and time _2024-01-19_19-59.
+2024-01-19 15:00:22,361 - root - INFO - Starting volume data processing and multithreading.
+2024-01-19 15:00:45,410 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 15:00:45,439 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      1.270769      7.250000
+std        0.865907      1.443307      3.089694      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      0.000000     11.000000
+max       39.975000    -75.025000     27.520000     19.000000
+2024-01-19 15:00:50,414 - root - INFO - Starting Plotly volume graph creation.
+2024-01-19 15:00:50,499 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 15:00:51,136 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 15:00:51,136 - root - INFO - Creating figure for graph type 3Danim and time _2024-01-19_19-59.
+2024-01-19 15:00:51,137 - root - INFO - Starting volume animation data processing and multithreading.
+2024-01-19 15:01:14,618 - root - INFO - Finished volume processing data for all heights. Final data:
+2024-01-19 15:01:14,661 - root - INFO -                 lat           lon          data       heights
+count 198000.000000 198000.000000 198000.000000 198000.000000
+mean      38.500000    -77.500000      1.993490      7.250000
+std        0.865907      1.443307      4.266818      5.492433
+min       37.025000    -79.975000      0.000000      0.500000
+25%       37.762500    -78.737500      0.000000      2.500000
+50%       38.500000    -77.500000      0.000000      6.000000
+75%       39.237500    -76.262500      0.000000     11.000000
+max       39.975000    -75.025000     39.000000     19.000000
+2024-01-19 15:01:19,778 - root - INFO - Starting Plotly volume animation graph creation.
+2024-01-19 15:01:25,084 - root - INFO - Finished Plotly volume graph creation.
+2024-01-19 15:01:29,535 - root - INFO - Figure creation successful. File stored in {file}.
+2024-01-19 15:01:29,535 - root - INFO - Cleaning all files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 15:01:29,561 - root - INFO - Deleted files in directory /data3/lanceu/server/data/3Drefl.
+2024-01-19 15:01:29,561 - root - INFO - Finished 3D graph creation at {current_time}.

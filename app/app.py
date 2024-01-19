@@ -13,6 +13,12 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 
+stringify = {
+    '2Dprecip': 'Precipitation Heatmap',
+    '3Drefl': 'Reflectivity Volume Plot',
+    '3Danim': 'Reflectivity Volume Animation',
+}
+
 # returns every date that the file system contains
 def get_valid_dates():
     # return file system folders
@@ -83,46 +89,40 @@ def main():
     except ValueError:
         return "error in main"
 
-@app.route('/graph_by_date/<date>', methods=['POST', 'GET'])
-def return_dated_graph(date):
+@app.route('/graph_by_date/<graph_type>/<date>', methods=['POST'])
+def return_dated_graph(graph_type, date):
     if request.method == 'POST':
-        print("received graph_by_date post request")
+        # print("received graph_by_date post request")
 
-        refl = get_dated_graph('/data3/lanceu/graphs/3Drefl', date)
-        anim = get_dated_graph('/data3/lanceu/graphs/3Danim', date)
-        precip = get_dated_graph('/data3/lanceu/graphs/2Dprecip', date)        
+        graph = get_dated_graph(f'/data3/lanceu/graphs/{graph_type}', date)
+
+        # refl = get_dated_graph('/data3/lanceu/graphs/3Drefl', date)
+        # anim = get_dated_graph('/data3/lanceu/graphs/3Danim', date)
+        # precip = get_dated_graph('/data3/lanceu/graphs/2Dprecip', date)        
 
         rendered_template = render_template(
             'graphs.html',
-            title="Graphs by Date",
-            reflJSON=refl,
-            animJSON=anim,
-            precipJSON=precip,
+            title=stringify[graph_type],
+            graphJSON=graph,
             valid_dates=get_valid_dates()
         )
 
         return jsonify({'rendered_template': rendered_template})
     
-@app.route('/graph_latest', methods=['POST', 'GET'])  
-def return_latest_graph():
+@app.route('/graph_latest/<graph_type>', methods=['POST'])  
+def return_latest_graph(graph_type):
     if request.method == 'POST':
-        print("received graph_latest post request")
+        # print("received graph_latest post request")
 
-        refl = get_newest_graph('/data3/lanceu/graphs/3Drefl')
-        anim = get_newest_graph('/data3/lanceu/graphs/3Danim')
-        precip = get_newest_graph('/data3/lanceu/graphs/2Dprecip')
+        graph = get_newest_graph(f'/data3/lanceu/graphs/{graph_type}')
 
         date = get_valid_dates()
-        date = date[len(date)-1]
+        date = date[len(date)-1] # last date in list is the most current
 
         rendered_template = render_template(
             'graphs.html',
-            title="Latest Graphs",
-            content=f"{date}",
-            htmlCard=None,
-            reflJSON=refl,
-            animJSON=anim,
-            precipJSON=precip,
+            title=stringify[graph_type],
+            graphJSON=graph,
             valid_dates=get_valid_dates()
         )
 

@@ -1,4 +1,4 @@
-var graph_date = ""
+var graph_type = "2Dprecip"
 
 console.log("Script loaded.")
 
@@ -22,12 +22,11 @@ function convert_to_dates(date_strings) {
 }
 
 function handle_graph_selection(button, graph) {
-    graph_type = graph
+    graph_type = graph;
 
-    $('.nav-item button').removeClass('bg-danger');
-    $('.nav-item button').addClass('bg-primary');
-    button.classList.add("bg-danger");
-    console.log("Current graph type " + graph_type)
+    $('.radio').removeClass('btn-primary').addClass('btn-light'); // Remove class from all buttons
+    $(button).removeClass('btn-light').addClass('btn-primary'); // Add class to the clicked button
+    console.log("Current graph type " + graph_type);
 }
 
 function get_graph_by_date() {
@@ -39,9 +38,9 @@ function get_graph_by_date() {
     const hours = String(graph_date.getHours()).padStart(2, "0");
     const minutes = String(graph_date.getMinutes()).padStart(2, "0");
 
-    const dateString = `${year}-${month}-${day}_${hours}-${minutes}`;
+    const date_string = `${year}-${month}-${day}_${hours}-${minutes}`;
 
-    url = "/graph_by_date/" + dateString
+    url = "/graph_by_date/" + graph_type + "/" + date_string
 
     $.ajax({
         type : "POST",
@@ -55,7 +54,7 @@ function get_graph_by_date() {
 }
 
 function get_latest_graph() {
-    url = "/graph_latest"
+    url = "/graph_latest/" + graph_type
 
     $.ajax({
         type : "POST",

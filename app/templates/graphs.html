@@ -82,6 +82,12 @@
     <div class="container-fluid mt-0">
         <div class="row">
             <div class="col-md-3 sidebar bg-info">
+                <div class="btn-group mt-3 w-100" role="group">
+                    <button type="button" class="radio btn btn-primary" onclick="handle_graph_selection(this, '2Dprecip')">Precipitation</button>
+                    <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '3Drefl')">Volume</button>
+                    <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '3Danim')">Volume Animation</button>
+                </div>
+
                 <div id="dateTimePicker" class="mt-3">
                 </div>
 
@@ -98,11 +104,7 @@
 
             <div class="col-md-9 mt-5 px-5 text-center bg-white">
                 <h1 id="main-title">{{ title }}</h1>
-                <div class="row">
-                    <div id="2dprecip" class="w-50"></div>
-                    <div id="3drefl" class="w-50"></div>
-                </div>
-                <div id="3danim" class="w-100"></div>
+                <div id="graph" class="w-100 h-75"></div>
             </div>
         </div>
     </div>
@@ -142,13 +144,10 @@
         });
         $("#dateTimePicker").addClass("bg-light")
 
-        var refl = {{ reflJSON  | safe}};
-        var precip = {{ precipJSON  | safe}};
-        var anim = {{ animJSON  | safe}};
-
-        Plotly.plot('3drefl', refl)
-        Plotly.plot('2dprecip', precip)
-        Plotly.plot('3danim', anim)
+        var graph = {{ graphJSON | safe}};
+        // Plotly.plot('3drefl', refl)
+        // Plotly.plot('2dprecip', precip)
+        Plotly.plot('graph', graph)
     </script>
 </body>
 
