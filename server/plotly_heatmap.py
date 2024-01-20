@@ -33,7 +33,7 @@ def grab_data():
     df_dict = {'lats': pooled_lats.flatten(), 'lons': pooled_lons.flatten(), 'data': pooled_data.flatten(), 'locations': locations.flatten()}
     df = pd.DataFrame(df_dict)
     logging.info(f"Finished heatmap data processing. Final data:")
-    logging.info(df.describe())
+    logging.info("\n %s", df.describe())
 
     return df
 

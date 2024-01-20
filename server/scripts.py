@@ -20,12 +20,12 @@ config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths ne
 # delete all files in a directory (used after graphs are created to empty data folders)
 def delete_dir(dir):
     try:
-        logging.info(f"Cleaning all files in directory %s.", dir)
+        logging.info(f"Cleaning used data files in directory %s.", dir)
         
         for f in os.listdir(dir): # iterate through every file in dir
             os.remove(os.path.join(dir, f)) # remove file with path dir/f
 
-        logging.info(f"Deleted files in directory %s.", dir)
+        logging.info(f"Cleaned files in directory %s.", dir)
     except Exception as e:
         logging.exception("EXCEPTION in delete_dir():")
 
@@ -80,11 +80,11 @@ def create_figure(graph_type, file_time):
         elif graph_type == "2Dprecip":
             fig = plotly_heatmap.make_figure(download_time=file_time, h=750, w=1000)
 
-        file = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
-        with open(file, 'w') as f:
+        path = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
+        with open(path, 'w') as f:
             f.write(plotly.io.to_json(fig))
 
-        logging.info("Figure creation successful. File stored in {file}.")
+        logging.info("Figure creation successful. File stored in %s.", path)
     except Exception as e:
         logging.exception("EXCEPTION in create_figure():")
 
@@ -148,8 +148,7 @@ def download_3d():
         create_figure("3Danim", file_time)
         delete_dir(file_location)
 
-        current_time = datetime.now().time()
-        logging.info("Finished 3D graph creation at {current_time}.")
+        logging.info("Finished 3D graph creation.")
     except Exception as e:
         logging.exception("EXCEPTION in download_3d():")    
 

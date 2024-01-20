@@ -54,7 +54,7 @@ def grab_data():
 
     df = pd.concat(height_frames, ignore_index=True, sort=False)
     logging.info("Finished volume processing data for all heights. Final data:")
-    logging.info(df.describe())
+    logging.info("\n %s", df.describe())
 
     return df
 
