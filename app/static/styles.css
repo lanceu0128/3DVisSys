@@ -46,3 +46,11 @@ a {
 .plotly .svg-container {
     margin: auto !important;
 }
+
+.navbar-brand {
+    font-size: 24px; /* Adjust the font size for the brand */
+}
+
+.navbar-nav .nav-link {
+    font-size: 21px; /* Adjust the font size for the nav links */
+}

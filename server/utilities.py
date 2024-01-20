@@ -37,111 +37,6 @@ def pool_array(data, pool_size, stride, max=False):
         
     return np.array(pooled).reshape(new_shape) # convert to NumpyArray and reshape
 
-# processes geoJSON of maryland area map for Volume plot
-def process_map_geojson():
-    states = ['maryland-counties.geojson', 
-    'Pennsylvania_County_Boundaries.geojson', 
-    'Virginia_Counties_Generalized.geojson',
-    'de_boundaries_county_state.min.json',
-    'WV_County_Boundaries.geojson'
-    ]
-    colors = ['black',
-    '#414141',
-    '#00297B',
-    '#8E4f3E',
-    '#06884F'
-    ]
-
-    pts = []
-    filtered_pts = []
-    colors_list = []
-    filtered_colors = []
-
-    for i, state in enumerate(states):
-        with open(state, 'r') as file:
-            jdata = json.load(file)
-
-        color = colors[i]
-        
-        for feature in jdata['features']:
-            if feature['geometry']['type'] == 'Polygon':
-                pts.extend(feature['geometry']['coordinates'][0])    
-                for _ in feature['geometry']['coordinates'][0]:
-                    colors_list.append(color)
-                pts.append([None, None])#mark the end of a polygon   
-                colors_list.append("black")
-                
-            elif feature['geometry']['type'] == 'MultiPolygon':
-                for polyg in feature['geometry']['coordinates']:
-                    pts.extend(polyg[0])
-                    for _ in polyg[0]:
-                        colors_list.append(color)
-                    pts.append([None, None])#end of polygon
-                    colors_list.append("black")                    
-            elif feature['geometry']['type'] == 'LineString': 
-                pts.extend(feature['geometry']['coordinates'])
-                for _ in feature['geometry']['coordinates']:
-                    colors_list.append(color)
-                pts.append([None, None])
-                colors_list.append("black")
-    
-    for i, pt in enumerate(pts):
-        y, x = pt[0], pt[1]
-        if (x is None and y is None) or (-80 <= y <= 75 and 37 <= x <= 40):
-            filtered_pts.append(pt) 
-            filtered_colors.append(colors_list[i])
-
-    y, x = zip(*filtered_pts)    
-    z = 0 * np.ones(len(x))
-
-    return x, y, z, filtered_colors
-
-def get_locations(lats, lons):
-    global locations
-
-    locs = []
-    shape = lats.shape
-    lats = lats.flatten()
-    lons = lons.flatten()
-
-    # locations_rounded contains JSON file with location data rounded to make grabbing data easier
-    with open('/home/lanceu/server/locations_rounded.json', 'r') as file:
-        locations = json.load(file)
-
-    # grab county data from each coordinate in flattened 2D array
-    for i in range(len(lats)):
-        try:
-            loc = locations[str(lats[i])][str(lons[i])]['county']
-            locs.append(loc)
-        except:
-            locs.append("")
-
-    return np.reshape(locs, shape)
-
-def download_location(i, coord):
-    global locations
-
-    lat = coord[0]
-    lon = coord[1]
-    url = f'https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&accept-language=en&zoom=10'
-
-    # ping OpenStreetMap API for lat and lon coordinates and get location data    
-    try:
-        result = requests.get(url=url)
-        result_json = result.json()
-        location = result_json['address']
-    except:
-        location = None
-
-    print(f"\nIteration {i}: Processed lat {lat} and lon {lon} as {location} from \n{url}")
-    
-    # make nested dictionary first if not already there
-    if lat not in locations:
-        locations[lat] = {}
-    if lon not in locations[lat]:
-        locations[lat][lon] = location
-
-    time.sleep(5) # don't spam API and get banned
 
 # function taken from the plotly documentation; converts matplotlib colormaps to plotly colorscales
 def matplotlib_to_plotly(cmap, pl_entries):
@@ -216,6 +111,52 @@ def elevation_map():
 
     return elevation_map, ocean_map
 
+def get_locations(lats, lons):
+    global locations
+
+    locs = []
+
+    # locations_rounded contains JSON file with location data rounded to make grabbing data easier
+    with open('/home/lanceu/server/locations_rounded.json', 'r') as file:
+        locations = json.load(file)
+
+    # grab county data from each coordinate in flattened 2D array
+    for i in range(len(lats)):
+        try:
+            loc = locations[str(lats[i])][str(lons[i])]['county']
+            locs.append(loc)
+
+            # print(lats[i], lons[i], loc)
+        except:
+            locs.append("")
+
+    return locs
+
+def download_location(i, coord):
+    global locations
+
+    lat = coord[0]
+    lon = coord[1]
+    url = f'https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&accept-language=en&zoom=10'
+
+    # ping OpenStreetMap API for lat and lon coordinates and get location data    
+    try:
+        result = requests.get(url=url)
+        result_json = result.json()
+        location = result_json['address']
+    except:
+        location = None
+
+    print(f"\nIteration {i}: Processed lat {lat} and lon {lon} as {location} from \n{url}")
+    
+    # make nested dictionary first if not already there
+    if lat not in locations:
+        locations[lat] = {}
+    if lon not in locations[lat]:
+        locations[lat][lon] = location
+
+    time.sleep(5) # don't spam API and get banned
+
 # grabs location data from OpenStreetMap for all latitude/longitude coordinates in pooled data
 def download_locations():
     global locations
@@ -266,6 +207,4 @@ def fix_locations():
     print(new_locations)
     
 if __name__ == '__main__':
-    _, ocean_map = elevation_map()
-    fig = go.Figure(data = [ocean_map])
-    fig.show()
+    download_locations()
