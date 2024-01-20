@@ -1,5 +1,5 @@
 graphs/*/
-app/__pycache__/*/
-server/__pycache__/*/
+**/__pycache__/
 **/dem_conus.nc 
 server/data/*/
+server/log.log
