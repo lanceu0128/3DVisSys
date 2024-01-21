@@ -59,7 +59,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link bg-primary text-white" href="mailto:marulraj@umd.edu?cc=lpu@umd.edu">
+          <a class="nav-link bg-primary text-white" href="github.com/lanceu0128/3dvissys">
             <span class="fa-brands fa-github"></span>
           </a>
         </li>
@@ -77,8 +77,8 @@
       <div class="col-md-3 sidebar bg-info">
 
         <div class="btn-group mt-3 w-100" role="group" aria-label="Basic example">
-          <button type="button" class="radio btn btn-primary" onclick="handle_graph_selection(this, '2Dprecip')">Precipitation</button>
-          <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '3Drefl')">Volume</button>
+          <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '2Dprecip')">Precipitation</button>
+          <button type="button" class="radio btn btn-primary" onclick="handle_graph_selection(this, '3Drefl')">Volume</button>
           <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '3Danim')">Volume Animation</button>
         </div>
 
@@ -92,32 +92,32 @@
         <button type="button" class="btn btn-light mt-3 mx-auto w-100" onclick="get_latest_graph()">
           Get Latest Graph
         </button>
-
+        
         <div style="height: 50vh;"></div>
       </div>
 
-      <div class="col-md-9 mt-5 px-5 bg-white">
+      <div id="content" class="col-md-9 mt-5 px-5 bg-white">
         {% block content %}{% endblock %}  
+      </div>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="loading-modal" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body py-5">
+              <h1 id='loading-icon' class="modal-title text-center">⛈️</h3>
+              <h4 id='loading-text' class="modal-title text-center">Loading... (0s)</h4>
+            </div>
+        </div>
       </div>
     </div>
   </div>
 
   <footer class="footer bg-light py-4">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4 text-left">
-          <a href="mailto:marulraj@umd.edu?cc=lpu@umd.edu" class="my-0 ">Lance Uymatiao & Malarvizhi Arulraj</p></a>
-        </div>
-        <div class="col-md-4 text-center">
-          <a href="https://cisess.umd.edu/"><img src="{{url_for('static', filename='cisess_logo.png')}}" width=125
-              height=100 alt="Center Image">
-          </a>
-        </div>
-        <div class="col-md-4 text-right">
-          <a href="/">
-            <p class="my-0">About</p>
-          </a>
-        </div>
+      <div class="text-center">
+        <a href="https://cisess.umd.edu/"><img src="{{url_for('static', filename='cisess_logo.png')}}" height=100 alt="Center Image">
+        </a>
       </div>
     </div>
   </footer>

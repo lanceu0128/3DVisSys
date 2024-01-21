@@ -54,3 +54,18 @@ a {
 .navbar-nav .nav-link {
     font-size: 21px; /* Adjust the font size for the nav links */
 }
+
+/* Define the animation */
+@keyframes upDownAnimation {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Apply the animation to the h1 element */
+#loading-icon {
+    animation: upDownAnimation 2s ease-in-out infinite;
+}
