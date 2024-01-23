@@ -25,12 +25,12 @@ def grab_data():
     data, lats, lons = grbs[1].data(lat1=37, lat2=40, lon1= -80 + 360, lon2=-75 + 360)
     lons -= 360
 
-    pooled_lats = util.pool_array(lats, 5, 5)
-    pooled_lons = util.pool_array(lons, 5, 5)
-    pooled_data = util.pool_array(data, 5, 5)
+    pooled_lats = util.pool_array(lats, 5, 5).flatten()
+    pooled_lons = util.pool_array(lons, 5, 5).flatten()
+    pooled_data = util.pool_array(data, 5, 5).flatten()
     locations = util.get_locations(pooled_lats, pooled_lons)
 
-    df_dict = {'lats': pooled_lats.flatten(), 'lons': pooled_lons.flatten(), 'data': pooled_data.flatten(), 'locations': locations.flatten()}
+    df_dict = {'lats': pooled_lats, 'lons': pooled_lons, 'data': pooled_data, 'locations': locations}
     df = pd.DataFrame(df_dict)
     logging.info(f"Finished heatmap data processing. Final data:")
     logging.info("\n %s", df.describe())

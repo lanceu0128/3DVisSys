@@ -30,14 +30,15 @@ def process_height_data(height):
     data[data < 0] = 0
     lons -= 360
 
-    pooled_lats = util.pool_array(lats, 5, 5)
-    pooled_lons = util.pool_array(lons, 5, 5)
-    pooled_data = util.pool_array(data, 5, 5, max=True)
+    pooled_lats = util.pool_array(lats, 5, 5).flatten()
+    pooled_lons = util.pool_array(lons, 5, 5).flatten()
+    pooled_data = util.pool_array(data, 5, 5).flatten()
     locations = util.get_locations(pooled_lats, pooled_lons)
     heights = np.full(pooled_data.shape, float(height))
 
+    # logging.info(f"Pooled data shapes: {pooled_lats.shape}, {pooled_lons.shape}, {pooled_data.shape}, {locations.shape}, {heights.shape}")
 
-    df_dict = {"lat": pooled_lats.flatten(), "lon": pooled_lons.flatten(), "data": pooled_data.flatten(), "locations": locations.flatten(), "heights": heights.flatten()}
+    df_dict = {"lat": pooled_lats, "lon": pooled_lons, "data": pooled_data, "locations": locations, "heights": heights}
     df = pd.DataFrame(df_dict)
 
     runtime = time.time() - start_time

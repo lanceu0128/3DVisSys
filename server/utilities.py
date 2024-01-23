@@ -117,7 +117,7 @@ def get_locations(lats, lons):
     locs = []
 
     # locations_rounded contains JSON file with location data rounded to make grabbing data easier
-    with open('/home/lanceu/server/locations_rounded.json', 'r') as file:
+    with open('/data3/lanceu/server/locations_rounded.json', 'r') as file:
         locations = json.load(file)
 
     # grab county data from each coordinate in flattened 2D array
@@ -125,8 +125,6 @@ def get_locations(lats, lons):
         try:
             loc = locations[str(lats[i])][str(lons[i])]['county']
             locs.append(loc)
-
-            # print(lats[i], lons[i], loc)
         except:
             locs.append("")
 
