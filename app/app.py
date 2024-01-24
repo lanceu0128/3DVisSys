@@ -89,41 +89,34 @@ def main():
     except ValueError:
         return "error in main"
 
-@app.route('/graph_by_date/<graph_type>/<date>', methods=['POST'])
+@app.route('/graph/<graph_type>/<date>', methods=['GET'])
 def return_dated_graph(graph_type, date):
-    if request.method == 'POST':
-        # print("received graph_by_date post request")
+    if request.method == 'GET':
+        graph = get_dated_graph(f'/data3/lanceu/graphs/{graph_type}', date)      
 
-        graph = get_dated_graph(f'/data3/lanceu/graphs/{graph_type}', date)
-
-        # refl = get_dated_graph('/data3/lanceu/graphs/3Drefl', date)
-        # anim = get_dated_graph('/data3/lanceu/graphs/3Danim', date)
-        # precip = get_dated_graph('/data3/lanceu/graphs/2Dprecip', date)        
-
-        rendered_template = render_template(
+        return render_template(
             'graphs.html',
             title=stringify[graph_type],
             graphJSON=graph,
             valid_dates=get_valid_dates()
         )
-
-        return jsonify({'rendered_template': rendered_template})
     
-@app.route('/graph_latest/<graph_type>', methods=['POST'])  
+@app.route('/graph/<graph_type>/latest', methods=['GET'])  
 def return_latest_graph(graph_type):
-    if request.method == 'POST':
-        # print("received graph_latest post request")
-
+    if request.method == 'GET':
         graph = get_newest_graph(f'/data3/lanceu/graphs/{graph_type}')
 
         date = get_valid_dates()
         date = date[len(date)-1] # last date in list is the most current
 
-        rendered_template = render_template(
+        return render_template(
             'graphs.html',
             title=stringify[graph_type],
             graphJSON=graph,
             valid_dates=get_valid_dates()
         )
 
-        return jsonify({'rendered_template': rendered_template})
+@app.route('/new_page/<user_input>', methods=['GET'])
+def new_page(user_input):
+    print(user_input)
+    return render_template("base.html")

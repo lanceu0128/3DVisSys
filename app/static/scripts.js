@@ -59,31 +59,13 @@ function get_graph_by_date() {
 
     const date_string = `${year}-${month}-${day}_${hours}-${minutes}`
 
-    url = "/graph_by_date/" + graph_type + "/" + date_string
-
-    $.ajax({
-        type : "POST",
-        url : url,
-        contentType: 'application/json',
-        success: function (response) {
-            console.log("POST response received from " + url)
-            $('#body').html(response.rendered_template)
-        }
-    })
+    url = "/graph/" + graph_type + "/" + date_string
+    window.location.href = url
 }
 
 function get_latest_graph() {
     loading_screen();
 
-    url = "/graph_latest/" + graph_type
-
-    $.ajax({
-        type : "POST",
-        url : url,
-        contentType: 'application/json',
-        success: function (response) {
-            console.log("POST response received from " + url)
-            $('#body').html(response.rendered_template)
-        }
-    })
+    url = "/graph/" + graph_type + "/latest"
+    window.location.href = url
 }
