@@ -1,5 +1,5 @@
 # flask imports
-from flask import Flask, render_template, request, jsonify, url_for
+from flask import Flask, render_template, request, jsonify, url_for, redirect
 
 # python library imports
 from datetime import datetime
@@ -89,34 +89,34 @@ def main():
     except ValueError:
         return "error in main"
 
+@app.route('/<graph_type>/<date>', methods=['GET'])
+def dated_graph_route(graph_type, date):
+    graph = get_dated_graph(f'/data3/lanceu/graphs/{graph_type}', date)      
+
+    return render_template(
+        'graphs.html',
+        title=stringify[graph_type],
+        graphJSON=graph,
+        valid_dates=get_valid_dates()
+    )
+
+@app.route('/<graph_type>/latest', methods=['GET'])
+def latest_graph_route(graph_type):
+    graph = get_newest_graph(f'/data3/lanceu/graphs/{graph_type}')
+
+    return render_template(
+        'graphs.html',
+        title=stringify[graph_type],
+        graphJSON=graph,
+        valid_dates=get_valid_dates()
+    )
+
 @app.route('/graph/<graph_type>/<date>', methods=['GET'])
 def return_dated_graph(graph_type, date):
     if request.method == 'GET':
-        graph = get_dated_graph(f'/data3/lanceu/graphs/{graph_type}', date)      
-
-        return render_template(
-            'graphs.html',
-            title=stringify[graph_type],
-            graphJSON=graph,
-            valid_dates=get_valid_dates()
-        )
+        return redirect(url_for('dated_graph_route', graph_type=graph_type, date=date))
     
 @app.route('/graph/<graph_type>/latest', methods=['GET'])  
 def return_latest_graph(graph_type):
     if request.method == 'GET':
-        graph = get_newest_graph(f'/data3/lanceu/graphs/{graph_type}')
-
-        date = get_valid_dates()
-        date = date[len(date)-1] # last date in list is the most current
-
-        return render_template(
-            'graphs.html',
-            title=stringify[graph_type],
-            graphJSON=graph,
-            valid_dates=get_valid_dates()
-        )
-
-@app.route('/new_page/<user_input>', methods=['GET'])
-def new_page(user_input):
-    print(user_input)
-    return render_template("base.html")
+        return redirect(url_for('latest_graph_route', graph_type=graph_type))
