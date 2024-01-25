@@ -100,7 +100,6 @@ def dated_graph_route(graph_type, date):
         graphJSON=graph,
         valid_dates=get_valid_dates(),
         graph_type=graph_type,
-        date_selection=date
     )
 
 @app.route('/<graph_type>/latest', methods=['GET'])
@@ -113,7 +112,6 @@ def latest_graph_route(graph_type):
         graphJSON=graph,
         valid_dates=get_valid_dates(),
         graph_type=graph_type,
-        date_selection=date
     )
 
 @app.route('/graph/<graph_type>/<date>', methods=['GET'])
