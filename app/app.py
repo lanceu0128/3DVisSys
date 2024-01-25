@@ -1,5 +1,5 @@
 # flask imports
-from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect
 
 # python library imports
 from datetime import datetime
@@ -84,7 +84,8 @@ def get_newest_graph(dir):
 def main():
     try:
         return render_template('index.html', 
-            valid_dates=get_valid_dates()
+            valid_dates=get_valid_dates(),
+            graph_type="3Drefl" # default value
         )
     except ValueError:
         return "error in main"
@@ -97,7 +98,9 @@ def dated_graph_route(graph_type, date):
         'graphs.html',
         title=stringify[graph_type],
         graphJSON=graph,
-        valid_dates=get_valid_dates()
+        valid_dates=get_valid_dates(),
+        graph_type=graph_type,
+        date_selection=date
     )
 
 @app.route('/<graph_type>/latest', methods=['GET'])
@@ -108,7 +111,9 @@ def latest_graph_route(graph_type):
         'graphs.html',
         title=stringify[graph_type],
         graphJSON=graph,
-        valid_dates=get_valid_dates()
+        valid_dates=get_valid_dates(),
+        graph_type=graph_type,
+        date_selection=date
     )
 
 @app.route('/graph/<graph_type>/<date>', methods=['GET'])

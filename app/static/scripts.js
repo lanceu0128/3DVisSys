@@ -1,20 +1,13 @@
-var graph_type = "3Drefl";
-
-console.log("Script loaded.");
-
 function loading_screen(text) {
     $('#loading-modal').modal('show');
 
-    var startTime = Date.now();
     var loadingTextElement = $('#loading-text') 
     loadingTextElement.text(`Loading ${text}... (0s)`);
-
-    // Update the loading text every 500 milliseconds (adjust as needed)
-    setInterval(function () {
-        // Calculate elapsed time
-        var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
     
-        // Update the text with elapsed time
+    // put element update on timer
+    var startTime = Date.now();
+    setInterval(function () {
+        var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
         loadingTextElement.text(`Loading ${text}... (${elapsedTime}s)`)
     }, 500);
 }
@@ -47,7 +40,6 @@ function handle_graph_selection(button, graph) {
 
 function get_graph_by_date() {
     loading_screen("page");
-
     graph_date = dateTimePicker.viewDate;
     form = $('#form');
     
@@ -59,7 +51,7 @@ function get_graph_by_date() {
 
     const date_string = `${year}-${month}-${day}_${hours}-${minutes}`;
 
-    form.attr('action', "/graph/" + graph_type + "/" + date_string);
+    form.attr('action', `/graph/${graph_type}/${date_string}`);
     form.submit();
 }
 
@@ -67,6 +59,6 @@ function get_latest_graph() {
     loading_screen("page");
     form = $('#form');
 
-    form.attr('action', "/graph/" + graph_type + "/latest");
+    form.attr('action', `/graph/${graph_type}/latest`);
     form.submit();
 }

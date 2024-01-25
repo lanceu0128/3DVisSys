@@ -77,10 +77,11 @@
       <div class="col-md-3 sidebar bg-info">
 
         <div class="btn-group mt-3 w-100" role="group" aria-label="Basic example">
-          <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '2Dprecip')">Precipitation</button>
-          <button type="button" class="radio btn btn-primary" onclick="handle_graph_selection(this, '3Drefl')">Volume</button>
-          <button type="button" class="radio btn btn-light" onclick="handle_graph_selection(this, '3Danim')">Volume Animation</button>
-        </div>
+          <button type="button" class="radio btn {% if graph_type == '2Dprecip' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '2Dprecip')">Precipitation</button>
+          <button type="button" class="radio btn {% if graph_type == '3Drefl' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '3Drefl')">Volume</button>
+          <button type="button" class="radio btn {% if graph_type == '3Danim' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '3Danim')">Volume Animation</button>
+      </div>
+      
 
         <form id="form" method="get">
           <div id="dateTimePicker" class="mt-3">
@@ -125,7 +126,9 @@
   </footer>
 
   <script type="text/javascript">
-    valid_dates = convert_to_dates({{ valid_dates | safe }})
+    var graph_type = "{{ graph_type | safe }}"
+    console.log(graph_type)
+    var valid_dates = convert_to_dates({{ valid_dates | safe }})
 
     dateTimePicker = new tempusDominus.TempusDominus(document.getElementById('dateTimePicker'), {
       display: {
