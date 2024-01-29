@@ -1,4 +1,4 @@
-name: 3dvissys
+name: 3dvissystest
 channels:
   - conda-forge
   - defaults
@@ -134,6 +134,8 @@ dependencies:
   - pcre2=10.42=hcad00b1_0
   - pillow=10.2.0=py312hf3581a9_0
   - pip=23.3.2=pyhd8ed1ab_0
+  - pip:
+    - flask_monitoringdashboard
   - pixman=0.43.0=h59595ed_0
   - plotly=5.18.0=pyhd8ed1ab_0
   - ply=3.11=py_1

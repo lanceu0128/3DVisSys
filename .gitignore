@@ -3,3 +3,4 @@ graphs/*/
 **/dem_conus.nc 
 server/data/*/
 server/log.log
+app/monitoring/flask_monitoringdashboard.db

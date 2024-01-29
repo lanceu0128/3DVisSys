@@ -1,5 +1,6 @@
 # flask imports
 from flask import Flask, render_template, request, url_for, redirect
+import flask_monitoringdashboard as dashboard
 
 # python library imports
 from datetime import datetime
@@ -90,36 +91,76 @@ def main():
     except ValueError:
         return "error in main"
 
-@app.route('/<graph_type>/<date>', methods=['GET'])
-def dated_graph_route(graph_type, date):
-    graph = get_dated_graph(f'/data3/lanceu/graphs/{graph_type}', date)      
+@app.route('/3Drefl/<date>', methods=['GET'])
+def route_3Drefl(date):
+    if request.method == "GET":
+        if date == "latest":
+            graph = get_newest_graph(f'/data3/lanceu/graphs/3Drefl')
+        else:
+            graph = get_dated_graph(f'/data3/lanceu/graphs/3Drefl', date)    
 
-    return render_template(
-        'graphs.html',
-        title=stringify[graph_type],
-        graphJSON=graph,
-        valid_dates=get_valid_dates(),
-        graph_type=graph_type,
-    )
+        return render_template(
+            'graphs.html',
+            title="Reflectivity",
+            graphJSON=graph,
+            valid_dates=get_valid_dates(),
+            graph_type="3Drefl",
+        )
 
-@app.route('/<graph_type>/latest', methods=['GET'])
-def latest_graph_route(graph_type):
-    graph = get_newest_graph(f'/data3/lanceu/graphs/{graph_type}')
+@app.route('/3Danim/<date>', methods=['GET'])
+def route_3Danim(date):
+    if request.method == "GET":
+        if date == "latest":
+            graph = get_newest_graph(f'/data3/lanceu/graphs/3Danim')
+        else:
+            graph = get_dated_graph(f'/data3/lanceu/graphs/3Danim', date)       
 
-    return render_template(
-        'graphs.html',
-        title=stringify[graph_type],
-        graphJSON=graph,
-        valid_dates=get_valid_dates(),
-        graph_type=graph_type,
-    )
+        return render_template(
+            'graphs.html',
+            title="Reflectivity (Animation)",
+            graphJSON=graph,
+            valid_dates=get_valid_dates(),
+            graph_type="3Danim",
+        )
+
+@app.route('/2Dprecip/<date>', methods=['GET'])
+def route_2Dprecip(date):
+    if request.method == "GET":
+        if date == "latest":
+            graph = get_newest_graph(f'/data3/lanceu/graphs/2Dprecip')
+        else:
+            graph = get_dated_graph(f'/data3/lanceu/graphs/2Dprecip', date)    
+
+        return render_template(
+            'graphs.html',
+            title="Precipitation",
+            graphJSON=graph,
+            valid_dates=get_valid_dates(),
+            graph_type="2Dprecip",
+        )
 
 @app.route('/graph/<graph_type>/<date>', methods=['GET'])
-def return_dated_graph(graph_type, date):
+def route_dated_graph(graph_type, date):
     if request.method == 'GET':
-        return redirect(url_for('dated_graph_route', graph_type=graph_type, date=date))
+        if graph_type == "3Drefl":
+            return redirect(url_for('route_3Drefl', date=date))
+        elif graph_type == "3Danim":
+            return redirect(url_for('route_3Danim', date=date))
+        elif graph_type == "2Dprecip":
+            return redirect(url_for('route_2Dprecip', date=date))
     
 @app.route('/graph/<graph_type>/latest', methods=['GET'])  
-def return_latest_graph(graph_type):
+def route_newest_graph(graph_type):
     if request.method == 'GET':
-        return redirect(url_for('latest_graph_route', graph_type=graph_type))
+        if graph_type == "3Drefl":
+            return redirect(url_for('route_3Drefl', date="latest"))
+        elif graph_type == "3Danim":
+            return redirect(url_for('route_3Danim', date="latest"))
+        elif graph_type == "2Dprecip":
+            return redirect(url_for('route_2Dprecip', date="latest"))
+
+dashboard.config.init_from(file='/data3/lanceu/app/monitoring/config.cfg')
+dashboard.bind(app)
+
+if __name__ == '__main__':
+  app.run(debug=True)
