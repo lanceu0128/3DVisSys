@@ -144,7 +144,7 @@ def make_figure(download_time, h, w):
     ]
     # Layout
     fig.update_layout(
-        title = f"Reflectivity (Animated) {download_time[1:]}",
+        title = f"Reflectivity (Animated) {download_time[1:-2]}",
         scene=dict(
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
@@ -190,7 +190,8 @@ def make_figure(download_time, h, w):
 
     fig.update_scenes(yaxis_autorange="reversed")
 
-    logging.info("Finished Plotly volume graph creation.")
+    logging.info("Finished Plotly volume animation graph creation.")
+
     return fig
 
 if __name__ == '__main__':

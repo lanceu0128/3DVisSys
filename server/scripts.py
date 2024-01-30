@@ -1,6 +1,6 @@
 # python library imports
 from datetime import datetime
-import gzip, shutil, os, json, requests, time, logging
+import gzip, shutil, os, json, requests, time, logging, re
 
 # external library imports
 import plotly, pygrib
@@ -54,20 +54,17 @@ def find_newest_time(data_type):
     url = config[data_type]["repository"]
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
+    pattern = r'_\d{8}-\d{6}'
 
-    # find all rows, go to second to last tr and td, strip text
-    rows = soup.find('body').find('table').find_all("tr")
-    newest_time = rows[len(rows) - 2].find_all("td")[1].text.strip()
+    total_files, total_matches = 0, 0
 
-    # create datetime object from string format
-    input_format = "%d-%b-%Y %H:%M"
-    dt_object = datetime.strptime(newest_time, input_format)
-
-    # reconvert back into new string format
-    output_format = "_%Y-%m-%d_%H-%M"
-    formatted_string = dt_object.strftime(output_format)
-
-    return formatted_string
+    for link in soup.find_all('a')[::-1]:
+        filename = link.get('href')
+        match = re.search(pattern, filename)
+        if match:
+            matched_string = match.group()  # Extract the matched string
+            if matched_string[-4:-2] == '00':  # Check if the minute part is '00'
+                return matched_string
 
 def create_figure(graph_type, file_time):
     try:
@@ -80,7 +77,7 @@ def create_figure(graph_type, file_time):
         elif graph_type == "2Dprecip":
             fig = plotly_heatmap.make_figure(download_time=file_time, h=750, w=1000)
 
-        path = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-3]}.json"
+        path = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-2]}.json"
         with open(path, 'w') as f:
             f.write(plotly.io.to_json(fig))
 
@@ -93,7 +90,8 @@ def check_2d(file_time):
     try:
         logging.info("Checking for substantial precipitation data during time %s.", file_time)
 
-        url = config['2D']['url']
+        file_time = find_newest_time("2D")
+        url = config['2D']['url'] + file_time + config['2D']['extension']
         file = config['2D']['file_location'] + config['2D']['file']
 
         unzip_location = download(url, file)
@@ -106,7 +104,6 @@ def check_2d(file_time):
             logging.info("%d values greater than 0 found. Skipping 2D graph creation for %s.", vals_greater_0, file_time)
             return False
 
-        file_time = find_newest_time("2D")
         create_figure("2Dprecip", file_time)
 
         logging.info("%d values greater than 0 found. Finished 2D graph creation for %s.", vals_greater_0, file_time)
@@ -138,7 +135,7 @@ def download_3d():
         logging.info("Starting downloading of 3D reflectivity data.")
 
         for height in heights:
-            url = folder_url + height + url_file_name + height + file_extension
+            url = folder_url + height + url_file_name + height + file_time + file_extension
             location = file_location + file_name + height + file_time + file_extension
             download(url, location)
 
@@ -150,7 +147,7 @@ def download_3d():
 
         logging.info("Finished 3D graph creation.")
     except Exception as e:
-        logging.exception("EXCEPTION in download_3d():")    
+        logging.exception("EXCEPTION in download_3d():")
 
 if __name__ == "__main__":
     download_3d()

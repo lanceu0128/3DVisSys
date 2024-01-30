@@ -91,7 +91,7 @@ def make_figure(download_time, h, w):
     fig = go.Figure(data = [volume_plot, elevation_map])
 
     fig.update_layout(
-        title = f"Reflectivity {download_time[1:]}",
+        title = f"Reflectivity {download_time[1:-2]}",
         scene=dict(
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
@@ -107,6 +107,7 @@ def make_figure(download_time, h, w):
     fig.update_scenes(yaxis_autorange="reversed")
 
     logging.info("Finished Plotly volume graph creation.")
+
     return fig
 
 if __name__ == "__main__":

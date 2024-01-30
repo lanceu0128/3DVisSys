@@ -84,7 +84,7 @@ def make_figure(download_time, h, w):
     )
 
     fig.update_layout(
-        title = f"Precipitation {download_time[1:]}",
+        title = f"Precipitation {download_time[1:-2]}",
         mapbox_style="white-bg",
         mapbox_layers=[
             {
