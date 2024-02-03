@@ -4,7 +4,7 @@ import flask_monitoringdashboard as dashboard
 
 # python library imports
 from datetime import datetime
-import gzip, shutil, os, json, requests, time
+import gzip, shutil, os, json, requests, time, re
 
 # external library imports
 import plotly, pygrib
@@ -25,17 +25,21 @@ def get_valid_dates():
     # return file system folders
     folder_2D = config["2D"]["graphs"]
     folder_3D = config["3D"]["graphs"]
+    # naming convention used for newest files; using to ignore the old files
+    file_pattern = re.compile(r'^\d{8}-\d{4}\.json$')
 
     # create list of every date in the 2D folder
     files_2D = os.listdir(folder_2D)
-    dates_2D = [file[0:-5] for file in files_2D] # only grab dated part
+    dates_2D = [file[0:-5] for file in files_2D if file_pattern.match(file)] # only grab dated part
 
     # create list of every date in the 3D folder
     files_3D = os.listdir(folder_3D)
-    dates_3D = [file[0:-5] for file in files_3D] # only grab dated part
+    dates_3D = [file[0:-5] for file in files_3D if file_pattern.match(file)] # only grab dated part
 
     # create list of only the dates that are in both folders
     dates = [date for date in dates_2D if date in dates_3D]
+
+    print(dates)
 
     return dates 
 
@@ -45,13 +49,13 @@ def get_dated_graph(dir, target_date):
 
     # get all dates and convert to date_objects
     date_strings = get_valid_dates()
-    date_objs = [datetime.strptime(date_string, "%Y-%m-%d_%H") for date_string in date_strings]
+    date_objs = [datetime.strptime(date_string, "%Y%m%d-%H00") for date_string in date_strings]
 
-    target_date_obj = datetime.strptime(target_date, "%Y-%m-%d_%H-%M") # convert target to date object
+    target_date_obj = datetime.strptime(target_date, "%Y%m%d-%H00") # convert target to date object
 
     # grab closest date and convert to string
     closest_date_obj = min(date_objs, key=lambda d: abs(d - target_date_obj)) # grab date with lowest distance from target
-    closest_date_string = closest_date_obj.strftime("%Y-%m-%d_%H")
+    closest_date_string = closest_date_obj.strftime("%Y%m%d-%H00")
         
     # find file path 
     file = "/" + closest_date_string + ".json"

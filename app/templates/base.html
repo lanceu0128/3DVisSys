@@ -127,8 +127,8 @@
 
   <script type="text/javascript">
     var graph_type = "{{ graph_type | safe }}"
-    console.log(graph_type)
     var valid_dates = convert_to_dates({{ valid_dates | safe }})
+    console.log(valid_dates)
 
     dateTimePicker = new tempusDominus.TempusDominus(document.getElementById('dateTimePicker'), {
       display: {

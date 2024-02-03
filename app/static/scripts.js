@@ -13,15 +13,16 @@ function loading_screen(text) {
 }
 
 function convert_to_date(str) {
-    var datePart = str.split('_')[0];
-    var timePart = str.split('_')[1];
+    var datePart = str.split('-')[0];
+    var timePart = str.split('-')[1];
   
     var year = parseInt(datePart.substring(0, 4));
-    var month = parseInt(datePart.substring(5, 7)) - 1; // subtract by 1 due to 0-based Date objects
-    var day = parseInt(datePart.substring(8, 10));
-    var hour = parseInt(timePart);
-
+    var month = parseInt(datePart.substring(4, 6)) - 1; // subtract by 1 due to 0-based Date objects
+    var day = parseInt(datePart.substring(6, 8));
+    var hour = parseInt(timePart.substring(0, 2));
+    
     var dateObj = new Date(year, month, day, hour);
+    console.log(str, year, month, day, hour)
     
     return dateObj;
 }
