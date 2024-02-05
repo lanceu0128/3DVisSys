@@ -1,10 +1,10 @@
 # flask imports
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 import flask_monitoringdashboard as dashboard
 
 # python library imports
-from datetime import datetime
-import gzip, shutil, os, json, requests, time, re
+from datetime import datetime, timedelta
+import gzip, shutil, os, json, requests, time, re, uuid
 
 # external library imports
 import plotly, pygrib
@@ -12,6 +12,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
+app.secret_key = 'key'
+app.permanent_session_lifetime = timedelta(days=1) # used to count each daily use as a unique visit
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 
 stringify = {
@@ -19,6 +21,13 @@ stringify = {
     '3Drefl': 'Reflectivity Volume Plot',
     '3Danim': 'Reflectivity Volume Animation',
 }
+
+# generates a user ID for a unique user session; used for monitoring purposes only
+def get_user_id():
+    if 'user_id' not in session:
+        session.permanent = True
+        session['user_id'] = str(uuid.uuid4())
+    return session['user_id']
 
 # returns every date that the file system contains
 def get_valid_dates():
@@ -39,8 +48,6 @@ def get_valid_dates():
     # create list of only the dates that are in both folders
     dates = [date for date in dates_2D if date in dates_3D]
 
-    print(dates)
-
     return dates 
 
 # returns graph from input directory and date (used for "Get Graph from Selected Date" button functionality)
@@ -49,13 +56,13 @@ def get_dated_graph(dir, target_date):
 
     # get all dates and convert to date_objects
     date_strings = get_valid_dates()
-    date_objs = [datetime.strptime(date_string, "%Y%m%d-%H00") for date_string in date_strings]
+    date_objs = [datetime.strptime(date_string, "%Y%m%d-%H%M") for date_string in date_strings]
 
-    target_date_obj = datetime.strptime(target_date, "%Y%m%d-%H00") # convert target to date object
+    target_date_obj = datetime.strptime(target_date, "%Y%m%d-%H%M") # convert target to date object
 
     # grab closest date and convert to string
     closest_date_obj = min(date_objs, key=lambda d: abs(d - target_date_obj)) # grab date with lowest distance from target
-    closest_date_string = closest_date_obj.strftime("%Y%m%d-%H00")
+    closest_date_string = closest_date_obj.strftime("%Y%m%d-%H%M")
         
     # find file path 
     file = "/" + closest_date_string + ".json"
@@ -163,7 +170,9 @@ def route_newest_graph(graph_type):
         elif graph_type == "2Dprecip":
             return redirect(url_for('route_2Dprecip', date="latest"))
 
+# needs to be at the bottom of the file for first time usage, gltiches out otherwise
 dashboard.config.init_from(file='/data3/lanceu/app/monitoring/config.cfg')
+dashboard.config.group_by = get_user_id
 dashboard.bind(app)
 
 if __name__ == '__main__':

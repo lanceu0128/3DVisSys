@@ -50,7 +50,7 @@ function get_graph_by_date() {
     const hours = String(graph_date.getHours()).padStart(2, "0");
     const minutes = String(graph_date.getMinutes()).padStart(2, "0");
 
-    const date_string = `${year}-${month}-${day}_${hours}-${minutes}`;
+    const date_string = `${year}${month}${day}-${hours}${minutes}`;
 
     form.attr('action', `/graph/${graph_type}/${date_string}`);
     form.submit();
