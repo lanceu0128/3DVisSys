@@ -55,7 +55,13 @@ a {
     font-size: 21px; /* Adjust the font size for the nav links */
 }
 
-/* Define the animation */
+.btn-group.btn-block {
+    display: flex;
+}
+.btn-group.btn-block > .btn {
+    flex: 1;
+}
+
 @keyframes upDownAnimation {
     0%, 100% {
         transform: translateY(0);
@@ -65,7 +71,6 @@ a {
     }
 }
 
-/* Apply the animation to the h1 element */
 #loading-icon {
     animation: upDownAnimation 2s ease-in-out infinite;
 }

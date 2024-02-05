@@ -75,24 +75,33 @@
   <div class="container-fluid mt-0">
     <div class="row">
       <div class="col-md-3 sidebar bg-info">
-
-        <div class="btn-group mt-3 w-100" role="group" aria-label="Basic example">
-          <button type="button" class="radio btn {% if graph_type == '2Dprecip' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '2Dprecip')">Precipitation</button>
-          <button type="button" class="radio btn {% if graph_type == '3Drefl' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '3Drefl')">Volume</button>
-          <button type="button" class="radio btn {% if graph_type == '3Danim' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '3Danim')">Volume Animation</button>
-      </div>
-      
+        <div class="mt-3 btn-group btn-block" id="colours">
+          <button type="button" class="radio btn {% if graph_type == '2Dprecip' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '2Dprecip')">
+            <h3><i class="fa-solid fa-table-cells-large"></i></h3>
+            Precipitation
+          </button>
+          <button type="button" class="radio btn {% if graph_type == '3Drefl' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '3Drefl')">
+            <h3><i class="fa-solid fa-cube"></i></h3>
+            Reflectivity
+          </button>
+          <button type="button" class="radio btn {% if graph_type == '3Danim' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '3Danim')">
+            <h3><i class="fa-solid fa-cubes"></i></h3>
+            Layered
+          </button>
+        </div>
 
         <form id="form" method="get">
           <div id="dateTimePicker" class="mt-3">
           </div>
-  
-          <button type="button" class="btn btn-light mt-3 mx-auto w-100" onclick="get_graph_by_date()">
-            Get Graph from Selected Date
+          
+          <button type="button" class="btn btn-light mt-3 mx-auto w-100 d-flex justify-content-between" onclick="get_graph_by_date()">
+            <span>Get Graph from Selected Date</span>
+            <span><i class="fa-solid fa-calendar-day"></i></span>
           </button>
-  
-          <button type="button" class="btn btn-light mt-3 mx-auto w-100" onclick="get_latest_graph()">
-            Get Latest Graph
+          
+          <button type="button" class="btn btn-light mt-3 mx-auto w-100 d-flex justify-content-between" onclick="get_latest_graph()">
+            <span>Get Latest Graph</span>
+            <span><i class="fa-solid fa-satellite-dish"></i></span>
           </button>
         </form>
         

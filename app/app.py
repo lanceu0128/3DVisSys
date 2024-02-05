@@ -12,7 +12,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-app.secret_key = 'key'
+app.secret_key = 'EastmostPeninsula'
 app.permanent_session_lifetime = timedelta(days=1) # used to count each daily use as a unique visit
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 

@@ -1,6 +1,11 @@
+# data/graph files
 graphs/*/
-**/__pycache__/
-**/dem_conus.nc 
 server/data/*/
-server/log.log
+**/dem_conus.nc 
+
+# usage tracking
 app/monitoring/flask_monitoringdashboard.db
+server/log.log
+
+# cache
+**/__pycache__/
