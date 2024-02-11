@@ -25,7 +25,7 @@
   <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 
   <!-- Custom Style / Scripts -->
-  <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
   <script src="{{url_for('static', filename='scripts.js')}}"></script>
 
   <!-- Icons -->
@@ -34,8 +34,10 @@
 </head>
 
 <body id="body">
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
-    <a class="navbar-brand text-white disply-1" href="/">3D-VisSys</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top rounded-bottom-left rounded-bottom-right">
+    <a class="navbar-brand text-white disply-1" href="/">
+      3DVisSys
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="fa fa-bars text-white"></span>
@@ -59,7 +61,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link bg-primary text-white" href="github.com/lanceu0128/3dvissys">
+          <a class="nav-link bg-primary text-white" target="_blank" href="https://github.com/lanceu0128/3dvissys">
             <span class="fa-brands fa-github"></span>
           </a>
         </li>
@@ -91,7 +93,7 @@
         </div>
 
         <form id="form" method="get">
-          <div id="dateTimePicker" class="mt-3">
+          <div id="dateTimePicker" class="mt-3 bg-info">
           </div>
           
           <button type="button" class="btn btn-light mt-3 mx-auto w-100 d-flex justify-content-between" onclick="get_graph_by_date()">
@@ -105,10 +107,10 @@
           </button>
         </form>
         
-        <div style="height: 50vh;"></div>
+        <div style="height: 75vh;"></div>
       </div>
 
-      <div id="content" class="col-md-9 mt-5 px-5 bg-white">
+      <div id="content" class="col-md-9 mt-5 px-5">
         {% block content %}{% endblock %}  
       </div>
       
@@ -117,7 +119,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-body py-5">
-              <h1 id='loading-icon' class="modal-title text-center">⛈️</h3>
+              <h1 id='loading-icon' class="modal-title text-center">⛈️</h3>    
               <h4 id='loading-text' class="modal-title text-center">Loading... (0s)</h4>
             </div>
         </div>
