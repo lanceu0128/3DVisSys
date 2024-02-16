@@ -18,7 +18,7 @@ For users who want to view and interact with visualizations, running in one's lo
     1. From the root directory, run `cd app`.
     2. Run `flask run`.
 
-## Running the Backend
+## Running the Data Pipelines
 For users who want to try creating their own visualizations, running in one's local environment can be done by installing all requirements and running the server directory:
 
 1. **Install all requirements:**
