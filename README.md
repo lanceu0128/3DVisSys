@@ -30,3 +30,22 @@ For users who want to try creating their own visualizations, running in one's lo
 2. **Switch into the server directory and run the server:**
     1. From the root directory, run `cd server`.
     2. Run `python scripts.py` to create graphs for the current time. Users may also want to use cronjob or another scheduler to run the file at certain times. An example crontab used in development to run the script hourly can be found in `server/cronjob.txt`.
+  
+## Tech Stack
+3DVisSys was primarily built with the following technologies:
+    - Python
+        - Flask
+            - Flask-MonitoringDashboard
+        - Pandas
+        - NumPy
+        - SciPy
+        - Plotly
+        - BeautifulSoup
+    - HTML
+    - CSS
+    - JavaScript
+        - Bootstrap
+            - Bootstrap Tempus Dominus Widget
+    - Linux 
+
+A more detailed view can be found in either `environment.yml` or `requirements.txt`.
