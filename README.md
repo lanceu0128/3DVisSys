@@ -33,19 +33,20 @@ For users who want to try creating their own visualizations, running in one's lo
   
 ## Tech Stack
 3DVisSys was primarily built with the following technologies:
-    - Python
-        - Flask
-            - Flask-MonitoringDashboard
-        - Pandas
-        - NumPy
-        - SciPy
-        - Plotly
-        - BeautifulSoup
-    - HTML
-    - CSS
-    - JavaScript
-        - Bootstrap
-            - Bootstrap Tempus Dominus Widget
-    - Linux 
+- Python
+    - Flask
+        - Flask-MonitoringDashboard
+    - Pandas
+    - NumPy
+    - SciPy
+    - Plotly
+    - BeautifulSoup
+- HTML
+- CSS
+    - Bootstrap
+        - Bootstrap Tempus Dominus Widget
+- JavaScript
+    - React.js
+- Linux (High-Performance Computing Server) 
 
 A more detailed view can be found in either `environment.yml` or `requirements.txt`.

@@ -1,15 +1,5 @@
 function loading_screen(text) {
     $('#loading-modal').modal('show');
-
-    var loadingTextElement = $('#loading-text') 
-    loadingTextElement.text(`Loading ${text}... (0s)`);
-    
-    // put element update on timer
-    var startTime = Date.now();
-    setInterval(function () {
-        var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-        loadingTextElement.text(`Loading ${text}... (${elapsedTime}s)`)
-    }, 500);
 }
 
 function convert_to_date(str) {

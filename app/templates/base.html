@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <!-- React Requirements -->
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src='https://unpkg.com/babel-standalone@6.26.0/babel.js'></script>
 
   <!-- Tempus Dominus Requirements -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -18,8 +23,6 @@
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.11/dist/css/tempus-dominus.min.css"
     crossorigin="anonymous">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/solid.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/fontawesome.min.js"></script>
 
   <!-- Plotly Requirements -->
   <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
@@ -33,50 +36,13 @@
   <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='cisess_logo_white.png')}}">
 </head>
 
-<body id="body">
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top rounded-bottom-left rounded-bottom-right">
-    <a class="navbar-brand text-white disply-1" href="/">
-      3DVisSys
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="fa fa-bars text-white"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end pt-1 pb-1" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link bg-primary text-white" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle bg-primary text-white" href="#" id="navbarDropdownMenuLink"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Data
-          </a>
-          <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item text-white" href="https://mrms.ncep.noaa.gov/data/" target="_blank">
-              NOAA MRMS</a>
-            <a class="dropdown-item text-white" href="https://nominatim.org/release-docs/latest/api/Overview/"
-              target="_blank">
-              OpenStreetMap</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link bg-primary text-white" target="_blank" href="https://github.com/lanceu0128/3dvissys">
-            <span class="fa-brands fa-github"></span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link bg-primary text-white" href="mailto:marulraj@umd.edu?cc=lpu@umd.edu">
-            <span class="fa fa-envelope"></span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
+<body>
+  
+  <div id="nav" class="sticky-top"></div>
+  
   <div class="container-fluid mt-0">
     <div class="row">
-      <div class="col-md-3 sidebar bg-info">
+      <div class="col-md-3 bg-info">
         <div class="mt-3 btn-group btn-block" id="colours">
           <button type="button" class="radio btn {% if graph_type == '2Dprecip' %}btn-primary{% else %}btn-light{% endif %}" onclick="handle_graph_selection(this, '2Dprecip')">
             <h3><i class="fa-solid fa-table-cells-large"></i></h3>
@@ -91,7 +57,7 @@
             Layered
           </button>
         </div>
-
+        
         <form id="form" method="get">
           <div id="dateTimePicker" class="mt-3 bg-info">
           </div>
@@ -109,21 +75,12 @@
         
         <div style="height: 75vh;"></div>
       </div>
-
+      
       <div id="content" class="col-md-9 mt-5 px-5">
         {% block content %}{% endblock %}  
       </div>
       
-      <!-- Modal -->
-      <div class="modal fade" id="loading-modal" data-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body py-5">
-              <h1 id='loading-icon' class="modal-title text-center">⛈️</h3>    
-              <h4 id='loading-text' class="modal-title text-center">Loading... (0s)</h4>
-            </div>
-        </div>
-      </div>
+      <div id="modalContainer"></div>
     </div>
   </div>
 
@@ -136,7 +93,7 @@
     </div>
   </footer>
 
-  <script type="text/javascript">
+  <script type="text/javascript" defer>
     var graph_type = "{{ graph_type | safe }}"
     var valid_dates = convert_to_dates({{ valid_dates | safe }})
     console.log(valid_dates)
@@ -158,7 +115,11 @@
     }
  
     $("#dateTimePicker").addClass("bg-light")
-  </script>
+    </script>
+    
+    <!-- Render React components -->
+    <script async src="{{url_for('static', filename='components/Nav.jsx')}}" type="text/babel"></script>
+    <script async src="{{url_for('static', filename='components/LoadingModal.jsx')}}" type="text/babel"></script>
 </body>
 
 </html>
