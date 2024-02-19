@@ -1,15 +1,18 @@
-const LoadingModal = () => {
+function LoadingModal () {
     const [elapsedTime, setElapsedTime] = React.useState(0);
 
     React.useEffect(() => {
-        setInterval(() => {
+        $("#loading-modal").on("show.bs.modal", () => {
+            setElapsedTime(0);
+        })
+
+        const interval = setInterval(() => {
             setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
         }, 1000);
 
         return () => {
             clearInterval(interval);
-            setElapsedTime(0);
-            // TODO: Fix glitch with elapsedTime starting at page load instead of show
+            $('#loading-modal').off('show.bs.modal');
         }
     }, []);
 

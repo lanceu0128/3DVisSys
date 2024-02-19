@@ -24,9 +24,8 @@ function convert_to_dates(date_strings) {
 function handle_graph_selection(button, graph) {
     graph_type = graph;
 
-    $('.radio').removeClass('btn-primary').addClass('btn-light'); // Remove class from all buttons
-    $(button).removeClass('btn-light').addClass('btn-primary'); // Add class to the clicked button
-    console.log("Current graph type " + graph_type);
+    $('.radio').removeClass('btn-primary').addClass('btn-light');
+    $(button).removeClass('btn-light').addClass('btn-primary');
 }
 
 function get_graph_by_date() {
