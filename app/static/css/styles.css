@@ -133,3 +133,9 @@ body {
 #loading-icon {
     animation: upDownAnimation 2s ease-in-out infinite;
 }
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon,
+.carousel-indicators {
+  filter: invert(1);
+}
