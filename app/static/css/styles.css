@@ -43,6 +43,14 @@ body {
     text-shadow: rgba(0, 0, 0, 0.5) 2px 1px;
 }
 
+#title-text {
+    transition: text-shadow 0.3s ease;
+}
+
+#title-text:hover {
+    text-shadow: rgba(0, 0, 0, 0.5) 4px 2px;
+}
+
 .navbar-logo {
     width: 25px;
     height: auto;
@@ -138,4 +146,17 @@ body {
 .carousel-control-prev-icon,
 .carousel-indicators {
   filter: invert(1);
+}
+
+.z-text {
+  transform: rotateX(5deg) rotateY(-10deg);
+  transition: transform 1s;
+}
+  
+[data-z]:hover .z-text {
+  transform: rotateX(-10deg) rotateY(5deg)
+}
+  
+.z-layer:not(:first-child) {
+  filter: brightness(0.2);
 }
