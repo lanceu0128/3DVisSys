@@ -22,15 +22,25 @@ stringify = {
     '3Danim': 'Reflectivity Volume Animation',
 }
 
-# generates a user ID for a unique user session; used for monitoring purposes only
 def get_user_id():
+    """
+    Used for monitoring dashboard purposes only (can be removed).
+    Generates a unique user ID for a session if user is not already in a 
+    session. Returning users are kicked out of sessions after about 24 hours. 
+    """
+
     if 'user_id' not in session:
         session.permanent = True
         session['user_id'] = str(uuid.uuid4())
     return session['user_id']
 
-# returns every date that the file system contains
 def get_valid_dates():
+    """
+    Returns every date contained in the app file system.
+    Finds dates based on regex matching for dates in a certain folder
+    and returns every date contained in the folder.
+    """
+
     # return file system folders
     folder_2D = config["2D"]["graphs"]
     folder_3D = config["3D"]["graphs"]
@@ -50,9 +60,12 @@ def get_valid_dates():
 
     return dates 
 
-# returns graph from input directory and date (used for "Get Graph from Selected Date" button functionality)
 def get_dated_graph(dir, target_date):
-    print(f"Grabbing graph at {dir} for time {target_date}")
+    """
+    Takes a directory of graphs and a target date,
+    returns queried graph from input directory that matches the date.
+    (used for "Get Graph from Selected Date" button functionality)
+    """
 
     # get all dates and convert to date_objects
     date_strings = get_valid_dates()
@@ -77,8 +90,14 @@ def get_dated_graph(dir, target_date):
 
     return graphJSON
 
-# returns newest graph in input directory (used for "Get Latest Graph" button functionality)
 def get_newest_graph(dir):
+    """
+    Takes a directory and returns the newest graph in the input directory.
+    Works by simply getting the graph that is the most recently created. 
+    May cause issues if old graphs are generated for testing recently.
+    (used for "Get Latest Graph" button functionality)
+    """
+
     files = os.listdir(dir)
     paths = [os.path.join(dir, file) for file in files]
 
@@ -94,6 +113,10 @@ def get_newest_graph(dir):
 
 @app.route('/')
 def main():
+    """
+    3D Visualization System index route.
+    """
+
     try:
         return render_template('index.html', 
             valid_dates=get_valid_dates(),
@@ -104,7 +127,15 @@ def main():
 
 @app.route('/3Drefl/<date>', methods=['GET'])
 def route_3Drefl(date):
+    """
+    Route for any 3D reflectivity graph. Takes an input date, matches
+    date with either target date or newest by calling get_newest_graph(dir, date) 
+    or get_latest_graph(dir), then returning the JSON data in the return template. 
+    Called from either route_dated_graph or route_newest_graph.
+    """
+
     if request.method == "GET":
+        # split based on whether we called from latest or a certain date
         if date == "latest":
             graph = get_newest_graph(f'/data3/lanceu/graphs/3Drefl')
         else:
@@ -120,6 +151,13 @@ def route_3Drefl(date):
 
 @app.route('/3Danim/<date>', methods=['GET'])
 def route_3Danim(date):
+    """
+    Route for any 3D animation graph. Takes an input date, matches
+    date with either target date or newest by calling get_newest_graph(dir, date) 
+    or get_latest_graph(dir), then returning the JSON data in the return template. 
+    Called from either route_dated_graph or route_newest_graph.
+    """
+
     if request.method == "GET":
         if date == "latest":
             graph = get_newest_graph(f'/data3/lanceu/graphs/3Danim')
@@ -136,6 +174,12 @@ def route_3Danim(date):
 
 @app.route('/2Dprecip/<date>', methods=['GET'])
 def route_2Dprecip(date):
+    """
+    Route for any 2D precipitation graph. Takes an input date, matches
+    date with either target date or newest by calling get_newest_graph(dir, date) 
+    or get_latest_graph(dir), then returning the JSON data in the return template. 
+    Called from either route_dated_graph or route_newest_graph.
+    """
     if request.method == "GET":
         if date == "latest":
             graph = get_newest_graph(f'/data3/lanceu/graphs/2Dprecip')
@@ -152,6 +196,12 @@ def route_2Dprecip(date):
 
 @app.route('/graph/<graph_type>/<date>', methods=['GET'])
 def route_dated_graph(graph_type, date):
+    """
+    Route for a dated graph of any type. Routes to specific graph type
+    query routes and includes the target date. Called by JavaScript
+    requesting the graph type and date in a URL. /graph/<graph_type>/<date>
+    is the URL that will show up in the user's browser.
+    """
     if request.method == 'GET':
         if graph_type == "3Drefl":
             return redirect(url_for('route_3Drefl', date=date))
@@ -162,6 +212,12 @@ def route_dated_graph(graph_type, date):
     
 @app.route('/graph/<graph_type>/latest', methods=['GET'])  
 def route_newest_graph(graph_type):
+    """
+    Route for the latest graph of any type. Routes to specific graph type
+    query routes and includes the "latest" date. Called by JavaScript
+    requesting the graph type and date in a URL. /graph/<graph_type>/<latest
+    is the URL that will show up in the user's browser.
+    """
     if request.method == 'GET':
         if graph_type == "3Drefl":
             return redirect(url_for('route_3Drefl', date="latest"))
