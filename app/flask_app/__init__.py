@@ -1,5 +1,5 @@
 # flask imports
-from flask import Flask
+from flask import Flask, render_template
 import flask_monitoringdashboard as dashboard
 
 # python imports
@@ -20,13 +20,20 @@ def get_user_id():
         session['user_id'] = str(uuid.uuid4())
     return session['user_id']
 
+def page_not_found(e):
+    """
+    404 Page. Renders on any URL with no defined route.
+    """
+    return render_template("404.html"), 404
+
 def create_app():
     """
-    App Constructor. Also initializes dashboard and configuration
+    App Factory. Initializes app blueprint, error handling, and monitoring dashboard.
     """
     app = Flask(__name__)
     
     app.register_blueprint(vissys)
+    app.register_error_handler(404, page_not_found)
 
     # dashboard setup
     app.secret_key = 'EastmostPeninsula'

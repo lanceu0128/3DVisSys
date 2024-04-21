@@ -19,13 +19,18 @@
     background: #9a9a9a; 
 }
 
+html {
+    height: 100%;
+}
+
 body {
     width: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    min-height: 100vh;
 }
 
 a {
     color: inherit;
-    text-decoration: inherit;
 }
 
 .navbar {
@@ -34,21 +39,8 @@ a {
     padding-bottom: 0 !important;
 }
 
-body {
-    font-family: 'Ubuntu', sans-serif;
-}
-
 .navbar-brand {
     font-family: 'Nunito', sans-serif;
-    text-shadow: rgba(0, 0, 0, 0.5) 2px 1px;
-}
-
-#title-text {
-    transition: text-shadow 0.3s ease;
-    text-shadow: rgba(0, 0, 0, 0.5) 0px 0px;
-}
-
-#title-text:hover {
     text-shadow: rgba(0, 0, 0, 0.5) 2px 1px;
 }
 
@@ -132,10 +124,10 @@ body {
 
 @keyframes upDownAnimation {
     0%, 100% {
-        transform: translateY(0);
+        transform: translateY(10px);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-10px);
     }
 }
 
@@ -147,17 +139,4 @@ body {
 .carousel-control-prev-icon,
 .carousel-indicators {
   filter: invert(1);
-}
-
-.z-text {
-  transform: rotateX(5deg) rotateY(-10deg);
-  transition: transform 1s;
-}
-  
-[data-z]:hover .z-text {
-  transform: rotateX(-10deg) rotateY(5deg)
-}
-  
-.z-layer:not(:first-child) {
-  filter: brightness(0.2);
 }

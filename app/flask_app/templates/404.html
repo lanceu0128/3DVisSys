@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>3D Precipitation & Reflectivity Visualization System</title>
+
+  <!-- Bootstrap/JQuery Requirements -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Custom Style / Scripts -->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='cisess_logo_white.png')}}">
+</head>
+
+<body class="min-vh-100">
+  {% include "header.html" %}
+
+  <div class="my-0 d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 205px)">
+    <div>        
+      <h1 id="title-text" class="text-center py-3">🗺️🔍🧐</h1>
+      <h4 class="text-center">We can't locate the page you're looking for.</h4> 
+    </div>
+  </div>
+
+  {% include "footer.html" %}
+</body>
+
+</html>
