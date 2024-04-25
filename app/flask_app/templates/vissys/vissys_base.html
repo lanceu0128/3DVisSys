@@ -27,20 +27,21 @@
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 
     <!-- Custom Style / Scripts -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
-    <script src="{{url_for('static', filename='scripts.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/vissys_styles.css')}}">
+    <script src="{{url_for('static', filename='vissys_scripts.js')}}"></script>
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='cisess_logo_white.png')}}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛈️</text></svg>">
   </head>
 
   <body>
-    {% include "header.html" %}
+    {% include "vissys/vissys_header.html" %}
 
     <div class="container-fluid mt-0">
       <div class="row">
-        {% include "sidebar.html" %}
+        {% include "vissys/vissys_sidebar.html" %}
         
         <div id="content" class="col-md-9 mt-5 px-5 pb-5 min-vh-100">
           {% block content %}{% endblock %}  
@@ -50,10 +51,10 @@
       </div>
     </div>
 
-    {% include "footer.html" %}
+    {% include "vissys/vissys_footer.html" %}
       
       <!-- Render React components -->
-      <script async src="{{url_for('static', filename='components/LoadingModal.jsx')}}" type="text/babel"></script>
+      <script async src="{{url_for('static', filename='components/VisSysLoadingModal.jsx')}}" type="text/babel"></script>
   </body>
 
   <script type="text/javascript" defer>

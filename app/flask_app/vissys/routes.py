@@ -18,14 +18,14 @@ def main():
     """
 
     try:
-        return render_template('index.html', 
+        return render_template('vissys/vissys_index.html', 
             valid_dates=get_valid_dates(),
             graph_type="3Drefl" # default value
         )
     except ValueError:
         return "error in main"
 
-@vissys.route('/3Drefl/<date>', methods=['GET'])
+@vissys.route('/vissys/3Drefl/<date>', methods=['GET'])
 def route_3Drefl(date):
     """
     Route for any 3D reflectivity graph. Takes an input date, matches
@@ -42,14 +42,14 @@ def route_3Drefl(date):
             graph = get_dated_graph(f'/data3/lanceu/graphs/3Drefl', date)    
 
         return render_template(
-            'graphs.html',
+            'vissys/vissys_graphs.html',
             title="Reflectivity",
             graphJSON=graph,
             valid_dates=get_valid_dates(),
             graph_type="3Drefl",
         )
 
-@vissys.route('/3Danim/<date>', methods=['GET'])
+@vissys.route('/vissys/3Danim/<date>', methods=['GET'])
 def route_3Danim(date):
     """
     Route for any 3D animation graph. Takes an input date, matches
@@ -65,14 +65,14 @@ def route_3Danim(date):
             graph = get_dated_graph(f'/data3/lanceu/graphs/3Danim', date)       
 
         return render_template(
-            'graphs.html',
+            'vissys/vissys_graphs.html',
             title="Reflectivity (Animation)",
             graphJSON=graph,
             valid_dates=get_valid_dates(),
             graph_type="3Danim",
         )
 
-@vissys.route('/2Dprecip/<date>', methods=['GET'])
+@vissys.route('/vissys/2Dprecip/<date>', methods=['GET'])
 def route_2Dprecip(date):
     """
     Route for any 2D precipitation graph. Takes an input date, matches
@@ -87,14 +87,14 @@ def route_2Dprecip(date):
             graph = get_dated_graph(f'/data3/lanceu/graphs/2Dprecip', date)    
 
         return render_template(
-            'graphs.html',
+            'vissys/vissys_graphs.html',
             title="Precipitation",
             graphJSON=graph,
             valid_dates=get_valid_dates(),
             graph_type="2Dprecip",
         )
 
-@vissys.route('/graph/<graph_type>/<date>', methods=['GET'])
+@vissys.route('/vissys/graph/<graph_type>/<date>', methods=['GET'])
 def route_dated_graph(graph_type, date):
     """
     Route for a dated graph of any type. Routes to specific graph type
@@ -110,7 +110,7 @@ def route_dated_graph(graph_type, date):
         elif graph_type == "2Dprecip":
             return redirect(url_for('vissys.route_2Dprecip', date=date))
     
-@vissys.route('/graph/<graph_type>/latest', methods=['GET'])  
+@vissys.route('/vissys/graph/<graph_type>/latest', methods=['GET'])  
 def route_newest_graph(graph_type):
     """
     Route for the latest graph of any type. Routes to specific graph type
