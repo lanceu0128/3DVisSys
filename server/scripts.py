@@ -17,8 +17,11 @@ logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log",
 
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
 
-# delete all files in a directory (used after graphs are created to empty data folders)
 def delete_dir(dir):
+    '''
+    Delete all files in a directory (used after graphs are created to empty data folders)
+    Input: the dir string from root
+    '''
     try:
         logging.info(f"Cleaning used data files in directory %s.", dir)
         
@@ -30,6 +33,11 @@ def delete_dir(dir):
         logging.exception("EXCEPTION in delete_dir():")
 
 def download(url, location):
+    '''
+    Downloads data from a url into a location. Uses request and gzip to download and unzip.
+    Input: url to download from and location to download into
+    Output: where the unzipped file was stored (same as location but with different file type) 
+    '''
     try:
         logging.debug(f"Downloading data from url %s into %s.", url, location)
 
@@ -48,8 +56,13 @@ def download(url, location):
     except Exception as e:
         logging.exception("EXCEPTION in download():")
 
-# used to generate a time to designate to each graph's file
 def find_newest_time(data_type):
+    '''
+    Generates a time to designate to each graph's file. 
+    Uses BS4 and RegEx to pattern match the newest file ending in 00 
+    Input: data_type (either "2D" or "3D" to access precipitation or reflectivity)
+    output: newest time in regex format _\d{8}-\d{6}
+    '''
     # request file repository for 2D or 3D MRMS data
     url = config[data_type]["repository"]
     response = requests.get(url)
@@ -62,11 +75,18 @@ def find_newest_time(data_type):
         filename = link.get('href')
         match = re.search(pattern, filename)
         if match:
-            matched_string = match.group()  # Extract the matched string
-            if matched_string[-4:-2] == '00':  # Check if the minute part is '00'
+            matched_string = match.group()  # extract the matched string
+            if matched_string[-4:-2] == '00':  # check if start of the hour
                 return matched_string
 
 def create_figure(graph_type, file_time):
+    '''
+    Just calls the individual figure creation files to make a figure for a specific time.
+    Input: graph_type ("2Dprecip", "3Drefl", "3Danim")
+
+    todo: these files should probably go to classes for better organization within them
+    todo: graph_type should be some kind of enum 
+    '''
     try:
         logging.info("Creating figure for graph type %s and time %s.", graph_type, file_time)
 
@@ -85,8 +105,11 @@ def create_figure(graph_type, file_time):
     except Exception as e:
         logging.exception("EXCEPTION in create_figure():")
 
-# checks if there is substantial rain data using smaller 2d file; if True collect 3D data files and create 3D graph
 def check_2d(file_time):
+    '''
+    Checks if there is substantial rain data using smaller 2d file. 
+    Used to determine if we should collect 3D data files and create 3D graph.
+    '''
     try:
         logging.info("Checking for substantial precipitation data during time %s.", file_time)
 
@@ -111,8 +134,10 @@ def check_2d(file_time):
     except Exception as e:
         logging.exception("EXCEPTION in check_2d:")
 
-# basically the "__main__" function. checks for precipitation data and donwloads/visualizes reflectivity accordingly
 def download_3d():
+    '''
+    Basically the "__main__" function. Calls check_2d() and donwloads/visualizes precipitation and reflectivity accordingly.
+    '''
     try:
         logging.info("==========================================================================================")
         logging.info("Starting scheduled download.")

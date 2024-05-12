@@ -21,23 +21,33 @@ logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 def process_height_data(height):
+    '''
+    Processes pygrib file for a singular height level. 
+    Needs to be it's own function for the multiprocessing pool to easily divide and conquer.
+    Input: height level being used
+    Output: dataframe
+
+    todo: there's probably better ways to divide the pool
+    todo: this and grab_data() are exactly the same in this file and plotly_volume, we should put both in utilities.py
+    '''
 
     logging.debug(f"Processing %s level data", height)
 
     grb = pygrib.open(file_location + file_name + height + file_time + file_extension)
-    # data, lats, lons = grb[1].data(lat1=35, lat2=35.5, lon1=-80+360, lon2=-79.5+360) #test for zoomed in area
     data, lats, lons = grb[1].data(lat1=37, lat2=40, lon1=-80+360, lon2=-75+360)
 
-    data[data < 0] = 0
-    lons -= 360
+    data[data < 0] = 0 # forgot why this is here?
+    lons -= 360 # +- 360 needed for weird grib file format from MRMS
 
+    # pool arrays to reduce size - might not be needed to this degree for 2D heatmaps though? 
+    # flatten arrays for easy dataframe usage
     pooled_lats = util.pool_array(lats, 5, 5).flatten()
     pooled_lons = util.pool_array(lons, 5, 5).flatten()
     pooled_data = util.pool_array(data, 5, 5).flatten()
+    # get locations for our coordinates from stored API output
     locations = util.get_locations(pooled_lats, pooled_lons)
+    # make heights array with the same shape as the others
     heights = np.full(pooled_data.shape, float(height))
-
-    # logging.info(f"Pooled data shapes: {pooled_lats.shape}, {pooled_lons.shape}, {pooled_data.shape}, {locations.shape}, {heights.shape}")
 
     df_dict = {"lat": pooled_lats, "lon": pooled_lons, "data": pooled_data, "locations": locations, "heights": heights}
     df = pd.DataFrame(df_dict)
@@ -48,7 +58,13 @@ def process_height_data(height):
     return df
 
 def grab_data():
-    logging.info("Starting volume data processing and multithreading.")
+    '''
+    Processes 3D volume map data from pygrib file and outputs a dataframe.
+    Uses multiprocessing to divide heights levels by processes, huge speed-up.  
+    '''
+    logging.info("Starting volume animation data processing and multiprocessing.")
+    # start 28 processes (the max on Odin) and have them work on each height in heights
+    # todo: make this adaptable to whatever server this will be installed on
     pool = Pool(28)
     height_frames = pool.map(process_height_data, heights) # next get data values at heights
 
@@ -59,10 +75,18 @@ def grab_data():
     return df
 
 def make_figure(download_time, h, w):
+    '''
+    Automated process for making the 3D volume animation figure. 
+    Input: download_time for use in naming, height and width for graph size.
+    Output: fig plotly figure object - should be converted to json or html in scripts.py  
+    '''
     global file_time
     file_time = download_time
 
     df = grab_data()
+    # gets elevation map from util
+    # todo: this elevation map is always the same but is generated again for every graph. 
+    #       we could speed up map generation by maybe 5-10 secs each time by reusing a previous version 
     elevation_map, ocean_map = util.elevation_map()
 
     logging.info("Starting Plotly volume graph creation.")

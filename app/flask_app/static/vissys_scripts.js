@@ -41,7 +41,7 @@ function get_graph_by_date() {
 
     const date_string = `${year}${month}${day}-${hours}${minutes}`;
 
-    form.attr('action', `/graph/${graph_type}/${date_string}`);
+    form.attr('action', `/vissys/graph/${graph_type}/${date_string}`);
     form.submit();
 }
 
@@ -49,6 +49,6 @@ function get_latest_graph() {
     loading_screen("page");
     form = $('#form');
 
-    form.attr('action', `/graph/${graph_type}/latest`);
+    form.attr('action', `/vissys/graph/${graph_type}/latest`);
     form.submit();
 }

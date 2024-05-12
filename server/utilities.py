@@ -17,8 +17,17 @@ file_name = 'MRMS_MergedReflectivityQC_'
 file_extension = "_20210708-120040" +'.grib2'
 height = "00.50" # any height will work for location data
 
-# takes large arrays and creates smaller array of 5x5 means of original
 def pool_array(data, pool_size, stride, max=False):
+    '''
+    Takes 2D arrays and uses mean/max pooling.
+    Used in graph creation tools to reduce size of graphs for performance.
+    Input: 
+    data - 2D numpy array
+    pool_size - size of pools 
+    stride - distance between pools
+    max - whether we want to use mean or max
+    Output: 2D numpy array fully processed for mean/max pooling
+    '''
     pools = []
     pooled = []
 
@@ -40,6 +49,12 @@ def pool_array(data, pool_size, stride, max=False):
 
 # function taken from the plotly documentation; converts matplotlib colormaps to plotly colorscales
 def matplotlib_to_plotly(cmap, pl_entries):
+    '''
+    Converts matplotlib colormaps to plotly colorscales.
+    Taken directly from: https://plotly.com/python/v3/matplotlib-colorscales/
+    Input: The colormap you want to convert and the number of colors
+    Output: Plotly colorscale for use in Plotly graphs
+    '''
     h = 1.0/(pl_entries-1)
     pl_colorscale = []
 
@@ -50,6 +65,13 @@ def matplotlib_to_plotly(cmap, pl_entries):
     return pl_colorscale
 
 def elevation_map():
+    '''
+    Creates elevation map and ocean map frames for use in 3D graphs. 
+    Takes dem_conus.nc and does a LOT of fancy numpy stuff to make it usable.
+    Output: two Plotly frames. 
+
+    note: ocean map is not currently used in the graphs because it's ugly
+    '''
     f=netCDF4.Dataset('/data3/lanceu/server/dem_conus.nc',"r")
     lat_dem=f.variables['lat'][:]
     lon_dem=f.variables['lon'][:]
@@ -112,6 +134,11 @@ def elevation_map():
     return elevation_map, ocean_map
 
 def get_locations(lats, lons):
+    '''
+    Takes the locations_rounded.json file puts it into a usable list of locations.
+
+    todo: the graphs show incorrect locations and i'm not sure why
+    '''
     global locations
 
     locs = []
@@ -131,6 +158,11 @@ def get_locations(lats, lons):
     return locs
 
 def download_location(i, coord):
+    '''
+    Helper function for download_locations(). Pings the OSM API for a location given coordinates.
+
+    Note that this isn't used in any automated process.
+    '''
     global locations
 
     lat = coord[0]
@@ -155,8 +187,13 @@ def download_location(i, coord):
 
     time.sleep(5) # don't spam API and get banned
 
-# grabs location data from OpenStreetMap for all latitude/longitude coordinates in pooled data
 def download_locations():
+    '''
+    Grabs location data from OpenStreetMap for all latitude/longitude coordinates in pooled data
+
+    Note that this isn't used in any automated process.
+    '''
+
     global locations
 
     grb = pygrib.open(file_location + file_name + "00.50" + file_extension)
@@ -181,8 +218,12 @@ def download_locations():
     with open(file_path, "w") as json_file:
         json.dump(locations, json_file)
 
-# used to recreate locations file with a set significant figures
 def fix_locations():
+    '''
+    Used to recreate locations file with 3 significant figures. 
+
+    Note that this isn't used in any automated process.
+    '''
     f = open("/home/lanceu/server/data/locations.json")
     data = json.load(f)
 
@@ -199,7 +240,7 @@ def fix_locations():
                 new_lon_key = str(round(float(lon_key), 3))
                 new_locations[new_lat_key][new_lon_key] = data[lat_key][lon_key]
 
-    with open("/home/lanceu/server/data/locations_test.json", "w") as json_file:
+    with open("/home/lanceu/server/data/locations_rounded.json", "w") as json_file:
         json.dump(new_locations, json_file)
 
     print(new_locations)
