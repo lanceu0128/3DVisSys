@@ -2,20 +2,81 @@ from multiprocessing import Pool
 from geopy.geocoders import Nominatim
 import numpy as np
 import pandas as pd
-import time, json, urllib, requests
+import time, json, urllib, requests, logging
 import plotly, pygrib, netCDF4
 import plotly.graph_objects as go
 from scipy.interpolate import griddata
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, colorConverter
 
-start_time = time.time()
-locations = {}
-
-file_location = '/home/lanceu/server/testdata/SampleData/'
+heights = ["00.50", "00.75", "01.00", "01.25", "01.50", "01.75", "02.00", "02.25", "02.50", "02.75", "03.00", "03.50", "04.00", "04.50", "05.00", "05.50", "06.00", "06.50", "07.00", "07.50", "08.00", "08.50", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00"]
+file_location = '/data3/lanceu/server/data/3Drefl/'
+# file_location = '/data3/lanceu/server/testdata/SampleData/' # uncomment if testing from this file
+file_time = ""
 file_name = 'MRMS_MergedReflectivityQC_'
-file_extension = "_20210708-120040" +'.grib2'
-height = "00.50" # any height will work for location data
+file_extension = '.grib2'
+start_time = time.time()
+
+logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log", filemode="a",
+                    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+def process_height_data(height):
+    '''
+    Processes pygrib file for a singular height level. 
+    Needs to be it's own function for the multiprocessing pool to easily divide and conquer.
+    Input: height level being used
+    Output: dataframe
+
+    todo: there's probably better ways to divide the pool
+    '''
+
+    logging.debug(f"Processing {height} level data")
+
+    grb = pygrib.open(file_location + file_name + height + file_time + file_extension)
+    data, lats, lons = grb[1].data(lat1=37, lat2=40, lon1=-80+360, lon2=-75+360)
+
+    data[data < 0] = 0 # forgot why this is here?
+    lons -= 360 # +- 360 needed for weird grib file format from MRMS
+
+    # pool arrays to reduce size - might not be needed to this degree for 2D heatmaps though? 
+    # flatten arrays for easy dataframe usage
+    pooled_lats = pool_array(lats, 5, 5).flatten()
+    pooled_lons = pool_array(lons, 5, 5).flatten()
+    pooled_data = pool_array(data, 5, 5).flatten()
+    # get locations for our coordinates from stored API output
+    locations = get_locations(pooled_lats, pooled_lons)
+    # make heights array with the same shape as the others
+    heights = np.full(pooled_data.shape, float(height))
+
+    df_dict = {"lat": pooled_lats, "lon": pooled_lons, "data": pooled_data, "locations": locations, "heights": heights}
+    df = pd.DataFrame(df_dict)
+
+    runtime = time.time() - start_time
+    logging.debug(f"Finished processing %s data in %s.", height, str(runtime))
+
+    return df
+
+def grab_data(download_time, graph_type = "unnamed"):
+    '''
+    Processes 3D volume map data from pygrib file and outputs a dataframe.
+    Uses multiprocessing to divide heights levels by processes, huge speed-up.  
+
+    Input:
+    - graph_type: string for logging purposes only (3D animation, 3D reflectivity, etc.)
+    '''
+    global file_time
+    file_time = download_time
+
+    logging.info("Starting %s data processing and multiprocessing.", graph_type)
+    # start 28 processes (the max on Odin) and have them work on each height in heights
+    # todo: make this adaptable to whatever server this will be installed on
+    pool = Pool(28)
+    height_frames = pool.map(process_height_data, heights) 
+
+    df = pd.concat(height_frames, ignore_index=True, sort=False)
+    logging.info("Finished volume processing data for all heights. Final data:")
+    logging.info("\n %s", df.describe())
+    return df
 
 def pool_array(data, pool_size, stride, max=False):
     '''
@@ -156,94 +217,3 @@ def get_locations(lats, lons):
             locs.append("")
 
     return locs
-
-def download_location(i, coord):
-    '''
-    Helper function for download_locations(). Pings the OSM API for a location given coordinates.
-
-    Note that this isn't used in any automated process.
-    '''
-    global locations
-
-    lat = coord[0]
-    lon = coord[1]
-    url = f'https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&accept-language=en&zoom=10'
-
-    # ping OpenStreetMap API for lat and lon coordinates and get location data    
-    try:
-        result = requests.get(url=url)
-        result_json = result.json()
-        location = result_json['address']
-    except:
-        location = None
-
-    print(f"\nIteration {i}: Processed lat {lat} and lon {lon} as {location} from \n{url}")
-    
-    # make nested dictionary first if not already there
-    if lat not in locations:
-        locations[lat] = {}
-    if lon not in locations[lat]:
-        locations[lat][lon] = location
-
-    time.sleep(5) # don't spam API and get banned
-
-def download_locations():
-    '''
-    Grabs location data from OpenStreetMap for all latitude/longitude coordinates in pooled data
-
-    Note that this isn't used in any automated process.
-    '''
-
-    global locations
-
-    grb = pygrib.open(file_location + file_name + "00.50" + file_extension)
-    data, lats, lons = grb[1].data(lat1=37, lat2=40, lon1=-80+360, lon2=-75+360)
-    lons -= 360 # needed as pygrib works with different lon scaling
-
-    pooled_lats = pool_array(lats, 5, 5)
-    pooled_lons = pool_array(lons, 5, 5)
-    coords = list(zip(pooled_lats.flatten(), pooled_lons.flatten()))
-
-    # locations.JSON contains raw OpenStreetMap API data
-    file_path = "/home/lanceu/server/data/locations.json"
-
-    for i, coord in enumerate(coords):
-        download_location(i, coord)
-
-        # save periodically in case of crash
-        if i % 600 == 0:
-            with open(file_path, "w") as json_file:
-                json.dump(locations, json_file)
-    
-    with open(file_path, "w") as json_file:
-        json.dump(locations, json_file)
-
-def fix_locations():
-    '''
-    Used to recreate locations file with 3 significant figures. 
-
-    Note that this isn't used in any automated process.
-    '''
-    f = open("/home/lanceu/server/data/locations.json")
-    data = json.load(f)
-
-    new_locations = {}
-
-    # takes raw locations.JSON data and converts into new JSON with rounded locations
-    for lat_key in data.keys():
-        if lat_key not in new_locations:
-            new_lat_key = str(round(float(lat_key), 3))
-            new_locations[new_lat_key] = {}
-
-        for lon_key in data[lat_key].keys():
-            if lon_key not in new_locations[new_lat_key]:
-                new_lon_key = str(round(float(lon_key), 3))
-                new_locations[new_lat_key][new_lon_key] = data[lat_key][lon_key]
-
-    with open("/home/lanceu/server/data/locations_rounded.json", "w") as json_file:
-        json.dump(new_locations, json_file)
-
-    print(new_locations)
-    
-if __name__ == '__main__':
-    download_locations()
