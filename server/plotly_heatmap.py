@@ -99,7 +99,7 @@ def make_figure(download_time, h, w):
     )
 
     fig.update_layout(
-        title = f"Precipitation {datetime.strptime(download_time, "_%Y%m%d-%H%M%S").strftime("%B %d, %Y %I:%M:%S %p")}",
+        title = f"Precipitation {datetime.strptime(download_time, '_%Y%m%d-%H%M%S').strftime('%B %d, %Y %I:%M:%S %p')}",
         mapbox_style="white-bg",
         mapbox_layers=[
             {

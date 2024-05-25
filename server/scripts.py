@@ -1,5 +1,6 @@
 # python library imports
 from datetime import datetime
+from enum import Enum
 import gzip, shutil, os, json, requests, time, logging, re
 
 # external library imports
@@ -16,6 +17,11 @@ logging.basicConfig(level=logging.INFO, filename="/data3/lanceu/server/log.log",
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 config = json.load(open("/data3/lanceu/server/config.json", "r")) # all paths need to be fully directed for cronjobs
+
+class GraphType(Enum):
+    refl = "3Drefl"
+    anim = "3Danim"
+    precip = "2Dprecip"
 
 def delete_dir(dir):
     '''
@@ -83,21 +89,18 @@ def create_figure(graph_type, file_time):
     '''
     Just calls the individual figure creation files to make a figure for a specific time.
     Input: graph_type ("2Dprecip", "3Drefl", "3Danim")
-
-    todo: these files should probably go to classes for better organization within them
-    todo: graph_type should be some kind of enum 
     '''
     try:
-        logging.info("Creating figure for graph type %s and time %s.", graph_type, file_time)
+        logging.info("Creating figure for graph type %s and time %s.", graph_type.value, file_time)
 
-        if graph_type == "3Drefl":
+        if graph_type is GraphType.refl:
             fig = plotly_volume.make_figure(download_time=file_time, h=750, w=1000)
-        elif graph_type == "3Danim":
+        elif graph_type is GraphType.anim:
             fig = plotly_volume_animation.make_figure(download_time=file_time, h=750, w=1000)
-        elif graph_type == "2Dprecip":
+        elif graph_type is GraphType.precip:
             fig = plotly_heatmap.make_figure(download_time=file_time, h=750, w=1000)
 
-        path = f"/data3/lanceu/graphs/{graph_type}/{file_time[1:-2]}.json"
+        path = f"/data3/lanceu/graphs/{graph_type.value}/{file_time[1:-2]}.json"
         with open(path, 'w') as f:
             f.write(plotly.io.to_json(fig))
 
@@ -127,7 +130,7 @@ def check_2d(file_time):
             logging.info("%d values greater than 0 found. Skipping 2D graph creation for %s.", vals_greater_0, file_time)
             return False
 
-        create_figure("2Dprecip", file_time)
+        create_figure(GraphType.precip, file_time)
 
         logging.info("%d values greater than 0 found. Finished 2D graph creation for %s.", vals_greater_0, file_time)
         return True
@@ -166,8 +169,8 @@ def download_3d():
 
         logging.info("Finished downloading of 3D reflectivity data.")
 
-        create_figure("3Drefl", file_time)
-        create_figure("3Danim", file_time)
+        create_figure(GraphType.refl, file_time)
+        create_figure(GraphType.anim, file_time)
         delete_dir(file_location)
 
         logging.info("Finished 3D graph creation.")

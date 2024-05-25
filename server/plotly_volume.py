@@ -115,7 +115,7 @@ def make_figure(download_time, h, w):
     fig = go.Figure(data = [volume_plot, elevation_map])
 
     fig.update_layout(
-        title = f"Reflectivity {datetime.strptime(download_time, "_%Y%m%d-%H%M%S").strftime("%B %d, %Y %I:%M:%S %p")}",
+        title = f"Reflectivity {datetime.strptime(download_time, '_%Y%m%d-%H%M%S').strftime('%B %d, %Y %I:%M:%S %p')}",
         scene=dict(
             xaxis_title = "Latitude",
             yaxis_title = "Longitude", 
